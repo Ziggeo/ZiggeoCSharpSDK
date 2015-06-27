@@ -7,5 +7,7 @@ so if you want to improve on it, feel free to add a pull request.
 
 Copyright (c) 2015 Ziggeo
 
+Apache 2.0 License
+
 Dependencies:
 - Newtonsoft.Json
