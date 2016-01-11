@@ -1,0 +1,24 @@
+<?xml version="1.0"?><package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>ZiggeoCSharpSDK</id>
+    <version>0.0.6</version>
+    <authors>Ziggeo</authors>
+    <owners>Ziggeo</owners>
+    <iconUrl>http://ziggeo.com/assets/images/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Ziggeo API (http://ziggeo.com) allows you to integrate video recording and playback with only two lines of code in your site, service or app. This is the C# Server SDK repository.</description>
+    <tags>Ziggeo, video recording, video playback, video</tags>
+    <licenseUrl>https://raw.github.com/Ziggeo/ZiggeoCSharpSDK/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://raw.github.com/Ziggeo/ZiggeoCSharpSDK</projectUrl>
+    <language>en-US</language>
+    <dependencies> 
+      <group>
+        <dependency id="Newtownsoft.Json" version="8.0.2" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="*.md" />
+    <file src="src/*" />
+  </files>
+</package>
