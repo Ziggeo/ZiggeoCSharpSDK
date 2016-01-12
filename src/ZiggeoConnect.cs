@@ -17,8 +17,10 @@ public class ZiggeoConnect {
     public Stream request(string method, string path, Dictionary<string, string> data, string file)
     {
         string postData = "";
-        foreach (string key in data.Keys)
-            postData += key + "=" + data[key] + "&";
+        if (data != null) {
+            foreach (string key in data.Keys)
+                postData += key + "=" + data[key] + "&";
+        }
         string uri = this.application.config().server_api_url + "/v1" + path;
         if (method != "POST")
             uri += "?" + postData;
