@@ -1,7 +1,7 @@
 <?xml version="1.0"?><package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>ZiggeoCSharpSDK</id>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
     <authors>Ziggeo</authors>
     <owners>Ziggeo</owners>
     <iconUrl>http://ziggeo.com/assets/images/logo.png</iconUrl>
