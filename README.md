@@ -1,4 +1,4 @@
-# Ziggeo C# Server SDK 0.0.7
+# Ziggeo C# Server SDK 0.0.8
 
 Ziggeo API (http://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the C# Server SDK repository.
