@@ -8,6 +8,7 @@ public class Ziggeo {
 	private ZiggeoVideos videosObj = null;
 	private ZiggeoStreams streamsObj = null;
 	private ZiggeoAuthtokens authtokensObj = null;
+	private ZiggeoAuth authObj = null;
 	
 	public Ziggeo(string token, string private_key, string encryption_key) {
 		this.token = token;
@@ -42,5 +43,11 @@ public class Ziggeo {
 			this.authtokensObj = new ZiggeoAuthtokens(this);
 		return this.authtokensObj;
 	}
-	
+
+	public ZiggeoAuth auth() {
+		if (this.authObj == null)
+			this.authObj = new ZiggeoAuth(this);
+		return this.authObj;
+	}
+
 }
