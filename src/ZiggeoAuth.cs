@@ -54,6 +54,7 @@ public class ZiggeoAuth {
 
                 var hexKey = _ByteToHexString(Key);
                 Key = _StringToByteArray(hexKey);
+                IV = _StringToByteArray(resultIV); 
 
                 // Encrypt the string to an array of bytes
                 byte[] cipher = this._RSA(JSONString, Key, IV);
