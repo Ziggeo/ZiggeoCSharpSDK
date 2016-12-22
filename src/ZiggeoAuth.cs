@@ -20,7 +20,7 @@ public class ZiggeoAuth {
     public string Generate(JObject initial_options) {
         var options = new JObject(
             new JProperty("application_token", application.token),
-            new JProperty("nonce", this._GenerateNonce())
+            new JProperty("nonce", _GenerateNonce())
         );
 
         var mergeSettings = new JsonMergeSettings {
@@ -29,7 +29,7 @@ public class ZiggeoAuth {
 
         options.Merge(initial_options, mergeSettings);
 
-        return this._Encrypt(options.ToString(Formatting.None) );
+        return _Encrypt(options.ToString(Formatting.None) );
     }
 
     /**
@@ -40,7 +40,7 @@ public class ZiggeoAuth {
 
             using (MD5 md5Hash = MD5.Create()) {
 
-                byte[] hash = this._GetMd5Hash(md5Hash, application.encryption_key);
+                byte[] hash = _GetMd5Hash(md5Hash, application.encryption_key);
 
                 // Generate Key and IV for AES
                 byte[] Key = hash;
@@ -57,7 +57,7 @@ public class ZiggeoAuth {
                 IV = _StringToByteArray(resultIV); 
 
                 // Encrypt the string to an array of bytes
-                byte[] cipher = this._RSA(JSONString, Key, IV);
+                byte[] cipher = _RSA(JSONString, Key, IV);
 
                 return resultIV + _ByteToHexString(cipher);
             }
