@@ -27,6 +27,10 @@ public class ZiggeoVideos {
         return this.application.connect().get("/videos/" + token_or_key + "/image", null);
     }
 
+    public JObject push_to_service(string token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/videos/" + token_or_key + "/push", data, null);
+    }
+
     public JObject update(string token_or_key, Dictionary<string,string> data) {
         return this.application.connect().postJSON("/videos/" + token_or_key + "", data, null);
     }

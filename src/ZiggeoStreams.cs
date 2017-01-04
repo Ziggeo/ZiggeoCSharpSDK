@@ -27,6 +27,10 @@ public class ZiggeoStreams {
         return this.application.connect().get("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", null);
     }
 
+    public JObject push_to_service(string video_token_or_key, string token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/videos/" + video_token_or_key + "/streams/" + token_or_key + "/push", data, null);
+    }
+
     public Stream delete(string video_token_or_key, string token_or_key) {
         return this.application.connect().delete("/videos/" + video_token_or_key + "/streams/" + token_or_key + "", null);
     }
