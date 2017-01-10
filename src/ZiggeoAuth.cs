@@ -19,7 +19,7 @@ public class ZiggeoAuth {
     */ 
     public string Generate(JObject initial_options) {
         var options = new JObject(
-            new JProperty("application_token", application.token),
+            new JProperty("application_token", this.application.token),
             new JProperty("nonce", _GenerateNonce())
         );
 
@@ -40,7 +40,7 @@ public class ZiggeoAuth {
 
             using (MD5 md5Hash = MD5.Create()) {
 
-                byte[] hash = _GetMd5Hash(md5Hash, application.encryption_key);
+                byte[] hash = _GetMd5Hash(md5Hash, this.application.encryption_key);
 
                 // Generate Key and IV for AES
                 byte[] Key = hash;
