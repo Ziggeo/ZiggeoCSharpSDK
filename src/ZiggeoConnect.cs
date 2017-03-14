@@ -16,12 +16,20 @@ public class ZiggeoConnect {
 
     public Stream request(string method, string path, Dictionary<string, string> data, string file)
     {
+        StringComparison comparison = StringComparison.InvariantCulture;
+
         string postData = "";
         if (data != null) {
             foreach (string key in data.Keys)
                 postData += key + "=" + data[key] + "&";
         }
-        string uri = this.application.config().server_api_url + "/v1" + path;
+
+        string server_api_url = this.application.config().server_api_url;
+        foreach (string key in this.application.config().regions.Keys)
+            if (this.application.token.StartsWith(key, comparison))
+                server_api_url = this.application.config().regions[key];
+
+        string uri = server_api_url + "/v1" + path;
         if (method != "POST")
             uri += "?" + postData;
         HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
@@ -58,7 +66,7 @@ public class ZiggeoConnect {
     private void WriteMultipartForm(Stream s, string boundary, Dictionary<string, string> data, string fileName, string fileContentType)
     {
         byte[] boundarybytes = Encoding.UTF8.GetBytes("--" + boundary + "\r\n");
-        byte[] trailer = Encoding.UTF8.GetBytes("\r\n--" + boundary + "–-\r\n");
+        byte[] trailer = Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
 
         if (data != null)
         {
