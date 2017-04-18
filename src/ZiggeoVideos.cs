@@ -31,6 +31,10 @@ public class ZiggeoVideos {
         return this.application.connect().postJSON("/videos/" + token_or_key + "/push", data, null);
     }
 
+    public JObject apply_effect(string token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/videos/" + token_or_key + "/effect", data, null);
+    }
+
     public JObject update(string token_or_key, Dictionary<string,string> data) {
         return this.application.connect().postJSON("/videos/" + token_or_key + "", data, null);
     }
