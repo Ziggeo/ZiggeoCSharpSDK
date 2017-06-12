@@ -15,11 +15,9 @@ namespace Delete_Video
 
             Ziggeo ziggeo = new Ziggeo("APP_TOKEN", "PRIVATE_KEY", "ENCRYPTION_KEY");
 
-            dynamic videoToDelete = JsonConvert.DeserializeObject(ziggeo.videos().get("Video_TOKEN"));
+            string VIDEO_TOKEN = "YOUR_VIDEO_TOKEN";
 
-            string file_name = videoToDelete.defaultstream.video_token;
-
-            System.Console.WriteLine("Deleting" + file_name);
+            System.Console.WriteLine("Deleting" + VIDEO_TOKEN);
 
             ziggeo.videos().delete("Video_TOKEN");
 

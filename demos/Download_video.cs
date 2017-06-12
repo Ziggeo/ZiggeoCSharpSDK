@@ -18,9 +18,9 @@ namespace download
 
 				dynamic videoToDownload = JsonConvert.DeserializeObject(ziggeo.videos().get("Video_TOKEN"));
 
-				string file_extension = videoToDownload.defaultstream.video_type;
+				string file_extension = videoToDownload.originalstream.video_type;
 
-				string file_name = videoToDownload.defaultstream.video_token + "." + file_extension;
+				string file_name = videoToDownload.originalstream.video_token + "." + file_extension;
 
 				var file_content = ziggeo.videos().download_video(videoToDownload);
 
@@ -30,10 +30,9 @@ namespace download
 
 
 			}
-           
+
     }
 }
-
 
 
 
