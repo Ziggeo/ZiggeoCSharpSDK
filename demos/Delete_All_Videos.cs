@@ -14,6 +14,7 @@ namespace Delete_all_videos
 
             Ziggeo ziggeo = new Ziggeo("APP_TOKEN", "PRIVATE_KEY", "ENCRYPTION_KEY");
 
+
             while (true)
             {
                 dynamic AllVideos = JsonConvert.DeserializeObject(ziggeo.videos().index());
@@ -33,4 +34,3 @@ namespace Delete_all_videos
         }
     }
 }
-
