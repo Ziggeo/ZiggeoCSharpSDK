@@ -14,23 +14,23 @@ namespace Delete_all_videos
 
             Ziggeo ziggeo = new Ziggeo("APP_TOKEN", "PRIVATE_KEY", "ENCRYPTION_KEY");
 
-            dynamic AllVideos = JsonConvert.DeserializeObject(ziggeo.videos().index());
 
-            if (AllVideos != null)
+            while (true)
             {
+                dynamic AllVideos = JsonConvert.DeserializeObject(ziggeo.videos().index());
+
+                if (AllVideos.count() == 0)
+                    break;
+
                 foreach (var item in AllVideos)
                 {
 
-                    dynamic videoToDelete = JsonConvert.DeserializeObject(ziggeo.videos().get(item.token));
-
-                    String file_name = videoToDelete.defaultstream.video_token;
-
-                    System.Console.WriteLine("Deleting" + file_name);
+                    System.Console.WriteLine("Deleting" + item.token);
 
                     ziggeo.videos().delete(item.token);
                 }
             }
-        }
 
+        }
     }
 }
