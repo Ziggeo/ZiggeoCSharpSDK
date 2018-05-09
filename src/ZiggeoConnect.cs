@@ -143,6 +143,10 @@ public class ZiggeoConnect {
 		return this.requestJSON("POST", path, data, file);
 	}
 
+    public JArray postJSONArray(string path, Dictionary<string,string> data, string file) {
+		return this.requestJSONArray("POST", path, data, file);
+	}
+
 	public Stream delete(string path, Dictionary<string,string> data) {
 		return this.request("DELETE", path, data, null);
 	}

@@ -11,7 +11,9 @@ public class Ziggeo {
 	private ZiggeoEffectProfileProcess effectProfileProcessObj = null;
 	private ZiggeoAuthtokens authtokensObj = null;
 	private ZiggeoAuth authObj = null;
-	
+	private ZiggeoAnalytics analyticsObj = null;
+	private ZiggeoWebhooks webhooksObj = null;
+
 	public Ziggeo(string token, string private_key, string encryption_key) {
 		this.token = token;
 		this.private_key = private_key;
@@ -64,4 +66,15 @@ public class Ziggeo {
 		return this.authObj;
 	}
 
+    public ZiggeoAnalytics analytics() {
+		if (this.analyticsObj == null)
+			this.analyticsObj = new ZiggeoAnalytics(this);
+		return this.analyticsObj;
+	}
+
+	public ZiggeoWebhooks webhooks() {
+        if (this.webhooksObj == null)
+            this.webhooksObj = new ZiggeoWebhooks(this);
+        return this.webhooksObj;
+    }
 }
