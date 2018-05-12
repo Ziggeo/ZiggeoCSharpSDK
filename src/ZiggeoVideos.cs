@@ -15,8 +15,16 @@ public class ZiggeoVideos {
         return this.application.connect().getJSONArray("/videos/", data);
     }
 
+    public JObject count(Dictionary<string,string> data) {
+        return this.application.connect().getJSON("/videos/count", data);
+    }
+
     public JObject get(string token_or_key) {
         return this.application.connect().getJSON("/videos/" + token_or_key + "", null);
+    }
+
+    public JArray get_bulk(Dictionary<string,string> data) {
+        return this.application.connect().postJSONArray("/videos/get_bulk", data, null);
     }
 
     public Stream download_video(string token_or_key) {
@@ -39,12 +47,20 @@ public class ZiggeoVideos {
         return this.application.connect().postJSON("/videos/" + token_or_key + "", data, null);
     }
 
+    public JArray update_bulk(Dictionary<string,string> data) {
+        return this.application.connect().postJSONArray("/videos/update_bulk", data, null);
+    }
+
     public Stream delete(string token_or_key) {
         return this.application.connect().delete("/videos/" + token_or_key + "", null);
     }
 
     public JObject create(Dictionary<string,string> data, string file) {
         return this.application.connect().postJSON("/videos/", data, file);
+    }
+
+    public JArray analytics(string token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSONArray("/videos/" + token_or_key + "/analytics", data, null);
     }
 
 }
