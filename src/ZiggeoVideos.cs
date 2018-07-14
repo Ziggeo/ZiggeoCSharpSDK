@@ -27,12 +27,20 @@ public class ZiggeoVideos {
         return this.application.connect().postJSONArray("/videos/get_bulk", data, null);
     }
 
+    public JArray stats_bulk(Dictionary<string,string> data) {
+        return this.application.connect().postJSONArray("/videos/stats_bulk", data, null);
+    }
+
     public Stream download_video(string token_or_key) {
         return this.application.connect().get("/videos/" + token_or_key + "/video", null);
     }
 
     public Stream download_image(string token_or_key) {
         return this.application.connect().get("/videos/" + token_or_key + "/image", null);
+    }
+
+    public JObject get_stats(string token_or_key) {
+        return this.application.connect().getJSON("/videos/" + token_or_key + "/stats", null);
     }
 
     public JObject push_to_service(string token_or_key, Dictionary<string,string> data) {

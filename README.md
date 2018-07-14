@@ -1,4 +1,4 @@
-# Ziggeo C# Server SDK 0.1.2
+# Ziggeo C# Server SDK 0.1.3
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the C# Server SDK repository.
@@ -112,6 +112,19 @@ Arguments
 - tokens_or_keys: *Comma-separated list with the desired videos tokens or keys (Limit: 100 tokens or keys).* 
 
 
+#### Stats Bulk 
+ 
+Get stats for multiple videos by tokens or keys. 
+
+```csharp 
+ziggeo.videos().stats_bulk(Dictionary<string, string> arguments) 
+``` 
+ 
+Arguments 
+- tokens_or_keys: *Comma-separated list with the desired videos tokens or keys (Limit: 100 tokens or keys).* 
+- summarize: *Boolean. Set it to TRUE to get the stats summarized. Set it to FALSE to get the stats for each video in a separate array. Default: TRUE.* 
+
+
 #### Download Video 
  
 Download the video data file 
@@ -128,6 +141,16 @@ Download the image data file
 
 ```csharp 
 ziggeo.videos().download_image(string token_or_key) 
+``` 
+ 
+
+
+#### Get Stats 
+ 
+Get the video's stats 
+
+```csharp 
+ziggeo.videos().get_stats(string token_or_key) 
 ``` 
  
 
@@ -520,6 +543,125 @@ Arguments
 - vertical: *Specify the vertical position of your watermark (a value between 0.0 and 1.0)* 
 - horizontal: *Specify the horizontal position of your watermark (a value between 0.0 and 1.0)* 
 - scale: *Specify the image scale of your watermark (a value between 0.0 and 1.0)* 
+
+
+### MetaProfiles  
+
+The meta profiles resource allows you to access and create meta profiles for your app. Each meta profile may contain one process or more. 
+ 
+
+#### Create 
+ 
+Create a new meta profile. 
+
+```csharp 
+ziggeo.metaProfiles().create(Dictionary<string, string> arguments) 
+``` 
+ 
+Arguments 
+- key: *Meta Profile profile key.* 
+- title: *Meta Profile profile title.* 
+
+
+#### Index 
+ 
+Get list of meta profiles. 
+
+```csharp 
+ziggeo.metaProfiles().index(Dictionary<string, string> arguments) 
+``` 
+ 
+Arguments 
+- limit: *Limit the number of returned meta profiles. Can be set up to 100.* 
+- skip: *Skip the first [n] entries.* 
+- reverse: *Reverse the order in which meta profiles are returned.* 
+
+
+#### Get 
+ 
+Get a single meta profile 
+
+```csharp 
+ziggeo.metaProfiles().get(string token_or_key) 
+``` 
+ 
+
+
+#### Delete 
+ 
+Delete the meta profile 
+
+```csharp 
+ziggeo.metaProfiles().delete(string token_or_key) 
+``` 
+ 
+
+
+### MetaProfileProcess  
+
+The process resource allows you to directly access all process associated with a single meta profile. 
+ 
+
+#### Index 
+ 
+Return all processes associated with a meta profile 
+
+```csharp 
+ziggeo.metaProfileProcess().index(string meta_token_or_key) 
+``` 
+ 
+
+
+#### Get 
+ 
+Get a single process 
+
+```csharp 
+ziggeo.metaProfileProcess().get(string meta_token_or_key, string token_or_key) 
+``` 
+ 
+
+
+#### Delete 
+ 
+Delete the process 
+
+```csharp 
+ziggeo.metaProfileProcess().delete(string meta_token_or_key, string token_or_key) 
+``` 
+ 
+
+
+#### Create Video Analysis Process 
+ 
+Create a new video analysis meta process 
+
+```csharp 
+ziggeo.metaProfileProcess().create_video_analysis_process(string meta_token_or_key) 
+``` 
+ 
+
+
+#### Create Audio Transcription Process 
+ 
+Create a new audio transcription meta process 
+
+```csharp 
+ziggeo.metaProfileProcess().create_audio_transcription_process(string meta_token_or_key) 
+``` 
+ 
+
+
+#### Create Nsfw Process 
+ 
+Create a new nsfw filter meta process 
+
+```csharp 
+ziggeo.metaProfileProcess().create_nsfw_process(string meta_token_or_key, Dictionary<string, string> arguments) 
+``` 
+ 
+Arguments 
+- nsfw_action: *One of the following three: approve, reject, nothing.* 
 
 
 ### Webhooks  
