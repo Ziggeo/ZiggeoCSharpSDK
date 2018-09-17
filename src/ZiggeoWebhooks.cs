@@ -12,11 +12,11 @@ public class ZiggeoWebhooks {
     }
 
     public Stream create(Dictionary<string,string> data) {
-        return this.application.connect().post("/api/hook", data, null);
+        return this.application.connect().post("/v1/api/hook", data, null);
     }
 
     public Stream delete(Dictionary<string,string> data) {
-        return this.application.connect().post("/api/removehook", data, null);
+        return this.application.connect().post("/v1/api/removehook", data, null);
     }
 
 }

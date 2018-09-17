@@ -9,27 +9,22 @@ using Newtonsoft.Json.Linq;
 public class ZiggeoConnect {
 
 	private Ziggeo application;
+	private string baseUri;
 
-	public ZiggeoConnect(Ziggeo application) {
+	public ZiggeoConnect(Ziggeo application, string baseUri) {
 		this.application = application;
+		this.baseUri = baseUri;
 	}
 
     public Stream request(string method, string path, Dictionary<string, string> data, string file)
     {
-        StringComparison comparison = StringComparison.InvariantCulture;
-
         string postData = "";
         if (data != null) {
             foreach (string key in data.Keys)
                 postData += key + "=" + data[key] + "&";
         }
 
-        string server_api_url = this.application.config().server_api_url;
-        foreach (string key in this.application.config().regions.Keys)
-            if (this.application.token.StartsWith(key, comparison))
-                server_api_url = this.application.config().regions[key];
-
-        string uri = server_api_url + "/v1" + path;
+        string uri = this.baseUri +  path;
         if (method != "POST")
             uri += "?" + postData;
         HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);

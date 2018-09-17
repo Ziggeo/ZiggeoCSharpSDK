@@ -12,7 +12,7 @@ public class ZiggeoAnalytics {
     }
 
     public JObject get(Dictionary<string,string> data) {
-        return this.application.connect().postJSON("/analytics/get", data, null);
+        return this.application.connect().postJSON("/v1/analytics/get", data, null);
     }
 
 }

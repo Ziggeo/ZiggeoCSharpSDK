@@ -1,3 +1,5 @@
+using System;
+
 public class Ziggeo {
 
     public string token;
@@ -5,10 +7,12 @@ public class Ziggeo {
     public string encryption_key;
     private ZiggeoConfig configObj;
     private ZiggeoConnect connectObj;
+    private ZiggeoConnect apiConnectObj;
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
     private ZiggeoAuthtokens authtokensObj = null;
+    private ZiggeoApplication applicationObj = null;
     private ZiggeoEffectProfiles effectProfilesObj = null;
     private ZiggeoEffectProfileProcess effectProfileProcessObj = null;
     private ZiggeoMetaProfiles metaProfilesObj = null;
@@ -17,11 +21,21 @@ public class Ziggeo {
     private ZiggeoAnalytics analyticsObj = null;
 
     public Ziggeo(string token, string private_key, string encryption_key) {
+        StringComparison comparison = StringComparison.InvariantCulture;
         this.token = token;
         this.private_key = private_key;
         this.encryption_key = encryption_key;
         this.configObj = new ZiggeoConfig();
-        this.connectObj = new ZiggeoConnect(this);
+        string server_api_url = this.config().server_api_url;
+        foreach (string key in this.config().regions.Keys)
+            if (this.token.StartsWith(key, comparison))
+                server_api_url = this.config().regions[key];
+        this.connectObj = new ZiggeoConnect(this, server_api_url);
+        string api_url = this.config().api_url;
+        foreach (string key in this.config().api_regions.Keys)
+            if (this.token.StartsWith(key, comparison))
+                api_url = this.config().api_regions[key];
+        this.apiConnectObj = new ZiggeoConnect(this, api_url);
     }
 
     public ZiggeoConfig config() {
@@ -30,6 +44,10 @@ public class Ziggeo {
 
     public ZiggeoConnect connect() {
         return this.connectObj;
+    }
+
+    public ZiggeoConnect apiConnect() {
+        return this.apiConnectObj;
     }
 
     public ZiggeoAuth auth() {
@@ -51,6 +69,11 @@ public class Ziggeo {
         if (this.authtokensObj == null)
             this.authtokensObj = new ZiggeoAuthtokens(this);
         return this.authtokensObj;
+    }
+    public ZiggeoApplication application() {
+        if (this.applicationObj == null)
+            this.applicationObj = new ZiggeoApplication(this);
+        return this.applicationObj;
     }
     public ZiggeoEffectProfiles effectProfiles() {
         if (this.effectProfilesObj == null)

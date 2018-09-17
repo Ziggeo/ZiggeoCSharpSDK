@@ -12,19 +12,23 @@ public class ZiggeoEffectProfiles {
     }
 
     public JObject create(Dictionary<string,string> data) {
-        return this.application.connect().postJSON("/effects/", data, null);
+        return this.application.connect().postJSON("/v1/effects/", data, null);
     }
 
     public JObject index(Dictionary<string,string> data) {
-        return this.application.connect().getJSON("/effects/", data);
+        return this.application.connect().getJSON("/v1/effects/", data);
     }
 
     public JObject get(string token_or_key) {
-        return this.application.connect().getJSON("/effects/" + token_or_key + "", null);
+        return this.application.connect().getJSON("/v1/effects/" + token_or_key + "", null);
     }
 
     public Stream delete(string token_or_key) {
-        return this.application.connect().delete("/effects/" + token_or_key + "", null);
+        return this.application.connect().delete("/v1/effects/" + token_or_key + "", null);
+    }
+
+    public JObject update(string token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/v1/effects/" + token_or_key + "", data, null);
     }
 
 }

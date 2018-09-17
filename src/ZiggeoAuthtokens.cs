@@ -12,19 +12,19 @@ public class ZiggeoAuthtokens {
     }
 
     public JObject get(string token) {
-        return this.application.connect().getJSON("/authtokens/" + token + "", null);
+        return this.application.connect().getJSON("/v1/authtokens/" + token + "", null);
     }
 
     public JObject update(string token_or_key, Dictionary<string,string> data) {
-        return this.application.connect().postJSON("/authtokens/" + token_or_key + "", data, null);
+        return this.application.connect().postJSON("/v1/authtokens/" + token_or_key + "", data, null);
     }
 
     public Stream delete(string token_or_key) {
-        return this.application.connect().delete("/authtokens/" + token_or_key + "", null);
+        return this.application.connect().delete("/v1/authtokens/" + token_or_key + "", null);
     }
 
     public JObject create(Dictionary<string,string> data) {
-        return this.application.connect().postJSON("/authtokens/", data, null);
+        return this.application.connect().postJSON("/v1/authtokens/", data, null);
     }
 
 }

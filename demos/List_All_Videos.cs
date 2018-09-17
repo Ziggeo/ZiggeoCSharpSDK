@@ -10,7 +10,7 @@ namespace list_all_videos
 {
     public class List_All_Videos
     {
-        public List_All_Videos()
+        public static void Main(string[] args)
         {
 
             Ziggeo ziggeo = new Ziggeo("APP_TOKEN", "PRIVATE_KEY", "ENCRYPTION_KEY");

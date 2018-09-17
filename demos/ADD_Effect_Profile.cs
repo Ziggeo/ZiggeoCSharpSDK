@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Add_effect_Profile
 {
-    public class ADD_Effect_Profile
+    public class Add_Effect_Profile
     {
         public static void Main(string[] args)
         {
