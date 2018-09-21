@@ -19,7 +19,7 @@ namespace Push_Service
 					{"pushservicetoken","YOUR Push Services's token"},
 				};
 
-			ziggeo.videos().update("Video_TOKEN", push);
+			ziggeo.videos().push_to_service("Video_TOKEN", push);
 			System.Console.WriteLine("Video has now been pushed!!");
 
 		}
