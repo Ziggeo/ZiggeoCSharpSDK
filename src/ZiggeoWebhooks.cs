@@ -15,6 +15,10 @@ public class ZiggeoWebhooks {
         return this.application.connect().post("/v1/api/hook", data, null);
     }
 
+    public Stream confirm(Dictionary<string,string> data) {
+        return this.application.connect().post("/v1/api/confirmhook", data, null);
+    }
+
     public Stream delete(Dictionary<string,string> data) {
         return this.application.connect().post("/v1/api/removehook", data, null);
     }
