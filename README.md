@@ -1,4 +1,4 @@
-# Ziggeo C# Server SDK 0.1.15
+# Ziggeo C# Server SDK 0.1.17
 
 Ziggeo API (https://ziggeo.com) allows you to integrate video recording and playback with only
 two lines of code in your site, service or app. This is the C# Server SDK repository.
@@ -372,6 +372,20 @@ Arguments
 - file: *Video file to be attached* 
 
 
+#### Attach Subtitle 
+ 
+Attaches a video to a new stream 
+
+```csharp 
+ziggeo.streams().attach_subtitle(string video_token_or_key, string token_or_key, Dictionary<string, string> arguments) 
+``` 
+ 
+Arguments 
+- lang: *Subtitle language* 
+- label: *Subtitle reference* 
+- data: *Actual subtitle* 
+
+
 #### Bind 
  
 Closes and submits the stream 
@@ -608,6 +622,21 @@ Attaches an image to a new stream
 
 ```csharp 
 ziggeo.effectProfileProcess().create_watermark_process(string effect_token_or_key, Dictionary<string, string> arguments, string file) 
+``` 
+ 
+Arguments 
+- file: *Image file to be attached* 
+- vertical_position: *Specify the vertical position of your watermark (a value between 0.0 and 1.0)* 
+- horizontal_position: *Specify the horizontal position of your watermark (a value between 0.0 and 1.0)* 
+- video_scale: *Specify the image scale of your watermark (a value between 0.0 and 1.0)* 
+
+
+#### Edit Watermark Process 
+ 
+Edits an existing watermark process. 
+
+```csharp 
+ziggeo.effectProfileProcess().edit_watermark_process(string effect_token_or_key, string token_or_key, Dictionary<string, string> arguments, string file) 
 ``` 
  
 Arguments 

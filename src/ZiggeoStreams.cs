@@ -47,6 +47,10 @@ public class ZiggeoStreams {
         return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", data, file);
     }
 
+    public JObject attach_subtitle(string video_token_or_key, string token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/subtitle", data, null);
+    }
+
     public JObject bind(string video_token_or_key, string token_or_key) {
         return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/bind", null, null);
     }
