@@ -6,20 +6,19 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-namespace Video_Count
+namespace Video_Upload
 {
-    public class Video_Count
+    public class Video_Upload
     {
         public static void Main(string[] args)
         {
 
             Ziggeo ziggeo = new Ziggeo(args[0], args[1], "");
 
-            System.Console.WriteLine(ziggeo.videos().count(null)["count"]);
+            string fileToUpload = args[2];
+
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            ziggeo.videos().create(data, fileToUpload);
         }
-
     }
-
 }
-    
-

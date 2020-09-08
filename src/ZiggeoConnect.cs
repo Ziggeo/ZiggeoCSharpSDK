@@ -3,6 +3,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -10,13 +11,60 @@ public class ZiggeoConnect {
 
 	private Ziggeo application;
 	private string baseUri;
+	private ZiggeoConfig config;
 
-	public ZiggeoConnect(Ziggeo application, string baseUri) {
+    public ZiggeoConnect(Ziggeo application, string baseUri) {
 		this.application = application;
 		this.baseUri = baseUri;
+        this.config = new ZiggeoConfig();
 	}
 
-    public Stream request(string method, string path, Dictionary<string, string> data, string file)
+	public ZiggeoConnect(Ziggeo application, string baseUri, ZiggeoConfig config) {
+		this.application = application;
+		this.baseUri = baseUri;
+		this.config = config;
+	}
+
+	public Stream makeRequest(string method, string path, Dictionary<string, string> data, string file) {
+        int statusCode = 0;
+		for(int i = 0; i < this.config.resilience_factor; i++) {
+			HttpWebResponse res = this.request(method, path, data, file);
+            if((int)res.StatusCode >= 200 && (int)res.StatusCode < 500) {
+                //good to go
+                return res.GetResponseStream();
+            }
+            statusCode = (int)res.StatusCode;
+		}
+        
+        Dictionary<string, string> errRes = new Dictionary<string, string>();
+
+        //If failed return the default value
+        errRes["response"] = (string) this.config.resilience_onfail["error"];
+
+        if(statusCode == 0) {
+            errRes["StatusCode"] = "900"; //Just a unique code to recognize that the error is internal in nature. At this point you could grab more details from $result['error']
+        }
+        string errorResponse = JsonConvert.SerializeObject(errRes, Formatting.Indented);
+        var errorResponseStream = new MemoryStream();
+        this.WriteStringToStream(errorResponseStream, errorResponse);
+        return errorResponseStream;
+	}
+
+    public Stream makeUploadRequest(string path, Dictionary<string, string> data, string file) {
+        int statusCode = 0;
+		for(int i = 0; i < this.config.resilience_factor; i++) {
+			HttpWebResponse res = this.uploadFileRequest(path, data, file);
+            if((int)res.StatusCode >= 200 && (int)res.StatusCode < 500) {
+                //good to go
+                return res.GetResponseStream();
+            }
+            statusCode = (int)res.StatusCode;
+		}
+        
+        throw new InvalidOperationException("Too many upload attempts failed");
+	}
+
+    public HttpWebResponse request(string method, string path, Dictionary<string, string> data, string file)
     {
         string postData = "";
         if (data != null) {
@@ -55,7 +103,27 @@ public class ZiggeoConnect {
             }
         }
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        return response.GetResponseStream();
+        return response;
+    }
+
+    public HttpWebResponse uploadFileRequest(string path, Dictionary<string, string> data, string file)
+    {
+        Trace.Write(path);
+        string postData = "";
+        if (data != null) {
+            foreach (string key in data.Keys)
+                postData += key + "=" + data[key] + "&";
+        }
+        string uri = path;
+        HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+        request.Method = "POST";
+        string boundary = "----------" + DateTime.Now.Ticks.ToString("x");
+        request.ContentType = "multipart/form-data; boundary=" + boundary;
+        Stream requestStream = request.GetRequestStream();
+        WriteMultipartForm(requestStream, boundary, data, file, "video/mp4");
+        requestStream.Close();
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        return response;
     }
 
     private void WriteMultipartForm(Stream s, string boundary, Dictionary<string, string> data, string fileName, string fileContentType)
@@ -102,7 +170,7 @@ public class ZiggeoConnect {
     }
 	
 	public string requestString(string method, string path, Dictionary<string,string> data, string file)  {
-		Stream stream = this.request(method, path, data, file);
+		Stream stream = this.makeRequest(method, path, data, file);
 		StreamReader reader = new StreamReader(stream);
 		string result = reader.ReadToEnd();
 		reader.Close();
@@ -119,7 +187,7 @@ public class ZiggeoConnect {
 	}
 
 	public Stream get(string path, Dictionary<string,string> data) {
-		return this.request("GET", path, data, null);
+		return this.makeRequest("GET", path, data, null);
 	}
 
 	public JObject getJSON(string path, Dictionary<string,string> data) {
@@ -131,11 +199,30 @@ public class ZiggeoConnect {
 	}
 
 	public Stream post(string path, Dictionary<string,string> data, string file) {
-		return this.request("POST", path, data, file);
+		return this.makeRequest("POST", path, data, file);
 	}
 
-	public JObject postJSON(string path, Dictionary<string,string> data, string file) {
+    public JObject postUploadJSON(string path, string scope, Dictionary<string,string> data, string file, string type_key) {
+        if (type_key != null) {
+            data[type_key] = Path.GetExtension(file);
+        }
+		var resp = this.postJSON(path, data);
+        var ret = resp[scope];
+        Dictionary<string, string> urlData = resp["url_data"]["fields"].ToObject<Dictionary<string, string>>();
+        this.makeUploadRequest((string) resp["url_data"]["url"], urlData, file);
+        return (JObject) ret;
+	}
+
+    public JObject postJSON(string path, Dictionary<string,string> data, string file) {
 		return this.requestJSON("POST", path, data, file);
+	}
+
+	public JObject postJSON(string path, Dictionary<string,string> data) {
+		return this.requestJSON("POST", path, data, null);
+	}
+
+    public JObject postJSON(string path) {
+		return this.requestJSON("POST", path, null, null);
 	}
 
     public JArray postJSONArray(string path, Dictionary<string,string> data, string file) {
@@ -143,7 +230,7 @@ public class ZiggeoConnect {
 	}
 
 	public Stream delete(string path, Dictionary<string,string> data) {
-		return this.request("DELETE", path, data, null);
+		return this.makeRequest("DELETE", path, data, null);
 	}
 
 	public JObject deleteJSON(string path, Dictionary<string,string> data) {

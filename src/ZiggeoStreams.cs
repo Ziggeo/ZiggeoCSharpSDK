@@ -20,11 +20,11 @@ public class ZiggeoStreams {
     }
 
     public Stream download_video(string video_token_or_key, string token_or_key) {
-        return this.application.connect().get("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", null);
+        return this.application.cdnConnect().get("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", null);
     }
 
     public Stream download_image(string video_token_or_key, string token_or_key) {
-        return this.application.connect().get("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", null);
+        return this.application.cdnConnect().get("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", null);
     }
 
     public JObject push_to_service(string video_token_or_key, string token_or_key, Dictionary<string,string> data) {
@@ -36,15 +36,33 @@ public class ZiggeoStreams {
     }
 
     public JObject create(string video_token_or_key, Dictionary<string,string> data, string file) {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams", data, file);
+        if (file != null) {
+            var result = this.application.connect().postUploadJSON("/v1/videos/" + video_token_or_key + "/streams-upload-url/", "stream", data, file, "video_type");
+            var streamResult = this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + result["token"] + "/confirm-video");
+            return streamResult;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/", data);
+        }
     }
 
     public JObject attach_image(string video_token_or_key, string token_or_key, Dictionary<string,string> data, string file) {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", data, file);
+        if (file != null) {
+            var result = this.application.connect().postUploadJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image-upload-url", "stream", data, file, null);
+            var streamResult = this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + result["token"] + "/confirm-image");
+            return streamResult;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/image", data);
+        }
     }
 
     public JObject attach_video(string video_token_or_key, string token_or_key, Dictionary<string,string> data, string file) {
-        return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", data, file);
+        if (file != null) {
+            var result = this.application.connect().postUploadJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video-upload-url", "stream", data, file, "video_type");
+            var streamResult = this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + result["token"] + "/confirm-video");
+            return streamResult;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/" + video_token_or_key + "/streams/" + token_or_key + "/video", data);
+        }
     }
 
     public JObject attach_subtitle(string video_token_or_key, string token_or_key, Dictionary<string,string> data) {

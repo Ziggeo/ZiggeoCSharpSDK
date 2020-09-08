@@ -8,6 +8,7 @@ public class Ziggeo {
     private ZiggeoConfig configObj;
     private ZiggeoConnect connectObj;
     private ZiggeoConnect apiConnectObj;
+    private ZiggeoConnect cdnConnectObj;
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
@@ -30,12 +31,17 @@ public class Ziggeo {
         foreach (string key in this.config().regions.Keys)
             if (this.token.StartsWith(key, comparison))
                 server_api_url = this.config().regions[key];
-        this.connectObj = new ZiggeoConnect(this, server_api_url);
+        this.connectObj = new ZiggeoConnect(this, server_api_url, this.configObj);
         string api_url = this.config().api_url;
         foreach (string key in this.config().api_regions.Keys)
             if (this.token.StartsWith(key, comparison))
                 api_url = this.config().api_regions[key];
-        this.apiConnectObj = new ZiggeoConnect(this, api_url);
+        this.apiConnectObj = new ZiggeoConnect(this, api_url, this.configObj);
+        string cdn_url = this.config().cdn_url;
+        foreach (string key in this.config().cdn_regions.Keys)
+            if (this.token.StartsWith(key, comparison))
+                cdn_url = this.config().cdn_regions[key];
+        this.cdnConnectObj = new ZiggeoConnect(this, cdn_url, this.configObj);
     }
 
     public ZiggeoConfig config() {
@@ -43,11 +49,42 @@ public class Ziggeo {
     }
 
     public ZiggeoConnect connect() {
+        if (this.connectObj == null)
+        {
+            StringComparison comparison = StringComparison.InvariantCulture;
+            string server_api_url = this.config().server_api_url;
+            foreach (string key in this.config().regions.Keys)
+                if (this.token.StartsWith(key, comparison))
+                    server_api_url = this.config().regions[key];
+            this.connectObj = new ZiggeoConnect(this, server_api_url, this.configObj);
+        }
         return this.connectObj;
     }
 
     public ZiggeoConnect apiConnect() {
+        if (this.apiConnectObj == null)
+        {
+            StringComparison comparison = StringComparison.InvariantCulture;
+            string api_url = this.config().api_url;
+            foreach (string key in this.config().api_regions.Keys)
+                if (this.token.StartsWith(key, comparison))
+                    api_url = this.config().api_regions[key];
+            this.apiConnectObj = new ZiggeoConnect(this, api_url);
+        }
         return this.apiConnectObj;
+    }
+    
+    public ZiggeoConnect cdnConnect() {
+        if (this.cdnConnectObj == null)
+        {
+            StringComparison comparison = StringComparison.InvariantCulture;
+            string cdn_url = this.config().cdn_url;
+            foreach (string key in this.config().cdn_regions.Keys)
+                if (this.token.StartsWith(key, comparison))
+                    cdn_url = this.config().cdn_regions[key];
+            this.cdnConnectObj = new ZiggeoConnect(this, cdn_url);
+        }
+        return this.cdnConnectObj;
     }
 
     public ZiggeoAuth auth() {

@@ -32,11 +32,11 @@ public class ZiggeoVideos {
     }
 
     public Stream download_video(string token_or_key) {
-        return this.application.connect().get("/v1/videos/" + token_or_key + "/video", null);
+        return this.application.cdnConnect().get("/v1/videos/" + token_or_key + "/video", null);
     }
 
     public Stream download_image(string token_or_key) {
-        return this.application.connect().get("/v1/videos/" + token_or_key + "/image", null);
+        return this.application.cdnConnect().get("/v1/videos/" + token_or_key + "/image", null);
     }
 
     public JObject get_stats(string token_or_key) {
@@ -68,7 +68,13 @@ public class ZiggeoVideos {
     }
 
     public JObject create(Dictionary<string,string> data, string file) {
-        return this.application.connect().postJSON("/v1/videos/", data, file);
+        if (file != null) {
+            var result = this.application.connect().postUploadJSON("/v1/videos-upload-url/", "video", data, file, "video_type");
+            result["default_stream"] = this.application.connect().postJSON("/v1/videos/" + result["token"] + "/streams/" + result["default_stream"]["token"] + "/confirm-video");
+            return result;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/", data);
+        }
     }
 
     public JArray analytics(string token_or_key, Dictionary<string,string> data) {
