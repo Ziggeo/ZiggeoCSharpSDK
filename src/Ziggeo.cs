@@ -63,7 +63,7 @@ public class Ziggeo {
 
     public ZiggeoConnect apiConnect() {
         if (this.apiConnectObj == null)
-        {
+            {
             StringComparison comparison = StringComparison.InvariantCulture;
             string api_url = this.config().api_url;
             foreach (string key in this.config().api_regions.Keys)
@@ -73,10 +73,10 @@ public class Ziggeo {
         }
         return this.apiConnectObj;
     }
-    
+
     public ZiggeoConnect cdnConnect() {
         if (this.cdnConnectObj == null)
-        {
+            {
             StringComparison comparison = StringComparison.InvariantCulture;
             string cdn_url = this.config().cdn_url;
             foreach (string key in this.config().cdn_regions.Keys)

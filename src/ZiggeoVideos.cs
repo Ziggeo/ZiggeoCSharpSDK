@@ -68,13 +68,12 @@ public class ZiggeoVideos {
     }
 
     public JObject create(Dictionary<string,string> data, string file) {
-        if (file != null) {
-            var result = this.application.connect().postUploadJSON("/v1/videos-upload-url/", "video", data, file, "video_type");
-            result["default_stream"] = this.application.connect().postJSON("/v1/videos/" + result["token"] + "/streams/" + result["default_stream"]["token"] + "/confirm-video");
-            return result;
-        } else {
-            return this.application.connect().postJSON("/v1/videos/", data);
-        }
+    if (file != null) {
+        var result = this.application.connect().postUploadJSON("/v1/videos-upload-url", "video", data, file, "video_type");
+        result["default_stream"] = this.application.connect().postJSON("/v1/videos/" + result["token"] + "/streams/" + result["default_stream"]["token"] + "/confirm-video");
+        return result;
+    } else
+            return this.application.connect().postJSON("/v1/videos/", data, file);
     }
 
     public JArray analytics(string token_or_key, Dictionary<string,string> data) {

@@ -28,11 +28,21 @@ public class ZiggeoEffectProfileProcess {
     }
 
     public JObject create_watermark_process(string effect_token_or_key, Dictionary<string,string> data, string file) {
-        return this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/watermark", data, file);
+    if (file != null) {
+        var result = this.application.connect().postUploadJSON("/v1/effects/" + effect_token_or_key + "/process/watermark-upload-url", "effect_process", data, file, null);
+        result = this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/" + result["token"] + "/confirm-watermark");
+        return result;
+    } else
+            return this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/watermark", data, file);
     }
 
     public JObject edit_watermark_process(string effect_token_or_key, string token_or_key, Dictionary<string,string> data, string file) {
-        return this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/watermark/" + token_or_key + "", data, file);
+    if (file != null) {
+        var result = this.application.connect().postUploadJSON("/v1/effects/" + effect_token_or_key + "/process/" + token_or_key + "/watermark-upload-url", "effect_process", data, file, null);
+        result = this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/" + token_or_key + "/confirm-watermark");
+        return result;
+    } else
+            return this.application.connect().postJSON("/v1/effects/" + effect_token_or_key + "/process/watermark/" + token_or_key + "", data, file);
     }
 
 }
