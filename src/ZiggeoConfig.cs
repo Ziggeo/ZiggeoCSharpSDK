@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class ZiggeoConfig {
 
-	public string server_api_url = "https://srvapi.ziggeo.com";
+	public string server_api_url = "https://srv-api.ziggeo.com";
     public string api_url = "https://api-us-east-1.ziggeo.com";
     public string cdn_url = "https://video-cdn.ziggeo.com";
     public int request_timeout = 60;
@@ -16,7 +16,7 @@ public class ZiggeoConfig {
 
     public ZiggeoConfig() {
         regions = new Dictionary<string, string>();
-                    regions["r1"] = "https://srvapi-eu-west-1.ziggeo.com";
+                    regions["r1"] = "https://srv-api-eu-west-1.ziggeo.com";
                 api_regions = new Dictionary<string, string>();
                     api_regions["r1"] = "https://api-eu-west-1.ziggeo.com";
                 cdn_regions = new Dictionary<string, string>();

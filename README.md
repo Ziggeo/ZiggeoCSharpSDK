@@ -1,6 +1,6 @@
 # Ziggeo's C# Server SDK
 
-latest version: **0.1.20**
+latest version: **0.1.24**
 
 ## Index
 
@@ -8,81 +8,82 @@ latest version: **0.1.20**
 2. [Prerequisites](#prerequisites)
     1. [Download](#download)
     2. [How to use](#how-to-use)
-
-    3[Dependencies](#dependencies)3. [Client-Side Integration](#codes-client-side)
+    3. [Dependencies](#dependencies)
+3. [Client-Side Integration](#codes-client-side)
 4. [Server-Side Integration](#codes-server-side)
     1. [Init](#codes-init)
     2. [Available Methods](#codes-methods)
     3. [Methods for Videos](#method-videos)
-        1. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        2. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        3. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        4. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        5. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        6. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        7. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        8. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        9. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        10. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        11. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        12. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        13. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        14. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        15. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
-        16. [Videos Ziggeo.videos](#method-videos-ziggeo.videos)
+        1. [Videos Index](#method-videos-index)
+        2. [Videos Count](#method-videos-count)
+        3. [Videos Get](#method-videos-get)
+        4. [Videos Get Bulk](#method-videos-get-bulk)
+        5. [Videos Stats Bulk](#method-videos-stats-bulk)
+        6. [Videos Download Video](#method-videos-download-video)
+        7. [Videos Download Image](#method-videos-download-image)
+        8. [Videos Get Stats](#method-videos-get-stats)
+        9. [Videos Push To Service](#method-videos-push-to-service)
+        10. [Videos Apply Effect](#method-videos-apply-effect)
+        11. [Videos Apply Meta](#method-videos-apply-meta)
+        12. [Videos Update](#method-videos-update)
+        13. [Videos Update Bulk](#method-videos-update-bulk)
+        14. [Videos Delete](#method-videos-delete)
+        15. [Videos Create](#method-videos-create)
+        16. [Videos Analytics](#method-videos-analytics)
     4. [Methods for Streams](#method-streams)
-        1. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        2. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        3. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        4. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        5. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        6. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        7. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        8. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        9. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        10. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
-        11. [Streams Ziggeo.streams](#method-streams-ziggeo.streams)
+        1. [Streams Index](#method-streams-index)
+        2. [Streams Get](#method-streams-get)
+        3. [Streams Download Video](#method-streams-download-video)
+        4. [Streams Download Image](#method-streams-download-image)
+        5. [Streams Push To Service](#method-streams-push-to-service)
+        6. [Streams Delete](#method-streams-delete)
+        7. [Streams Create](#method-streams-create)
+        8. [Streams Attach Image](#method-streams-attach-image)
+        9. [Streams Attach Video](#method-streams-attach-video)
+        10. [Streams Attach Subtitle](#method-streams-attach-subtitle)
+        11. [Streams Bind](#method-streams-bind)
     5. [Methods for Authtokens](#method-authtokens)
-        1. [Authtokens Ziggeo.authtokens](#method-authtokens-ziggeo.authtokens)
-        2. [Authtokens Ziggeo.authtokens](#method-authtokens-ziggeo.authtokens)
-        3. [Authtokens Ziggeo.authtokens](#method-authtokens-ziggeo.authtokens)
-        4. [Authtokens Ziggeo.authtokens](#method-authtokens-ziggeo.authtokens)
+        1. [Authtokens Get](#method-authtokens-get)
+        2. [Authtokens Update](#method-authtokens-update)
+        3. [Authtokens Delete](#method-authtokens-delete)
+        4. [Authtokens Create](#method-authtokens-create)
     6. [Methods for Application](#method-application)
-        1. [Application Ziggeo.application](#method-application-ziggeo.application)
-        2. [Application Ziggeo.application](#method-application-ziggeo.application)
-        3. [Application Ziggeo.application](#method-application-ziggeo.application)
+        1. [Application Get](#method-application-get)
+        2. [Application Update](#method-application-update)
+        3. [Application Get Stats](#method-application-get-stats)
     7. [Methods for Effect Profiles](#method-effect-profiles)
-        1. [Effect Profiles Ziggeo.effectProfiles](#method-effect-profiles-ziggeo.effectprofiles)
-        2. [Effect Profiles Ziggeo.effectProfiles](#method-effect-profiles-ziggeo.effectprofiles)
-        3. [Effect Profiles Ziggeo.effectProfiles](#method-effect-profiles-ziggeo.effectprofiles)
-        4. [Effect Profiles Ziggeo.effectProfiles](#method-effect-profiles-ziggeo.effectprofiles)
-        5. [Effect Profiles Ziggeo.effectProfiles](#method-effect-profiles-ziggeo.effectprofiles)
+        1. [Effect Profiles Create](#method-effect-profiles-create)
+        2. [Effect Profiles Index](#method-effect-profiles-index)
+        3. [Effect Profiles Get](#method-effect-profiles-get)
+        4. [Effect Profiles Delete](#method-effect-profiles-delete)
+        5. [Effect Profiles Update](#method-effect-profiles-update)
     8. [Methods for Effect Profile Process](#method-effect-profile-process)
-        1. [Effect Profile Process Ziggeo.effectProfileProcess](#method-effect-profile-process-ziggeo.effectprofileprocess)
-        2. [Effect Profile Process Ziggeo.effectProfileProcess](#method-effect-profile-process-ziggeo.effectprofileprocess)
-        3. [Effect Profile Process Ziggeo.effectProfileProcess](#method-effect-profile-process-ziggeo.effectprofileprocess)
-        4. [Effect Profile Process Ziggeo.effectProfileProcess](#method-effect-profile-process-ziggeo.effectprofileprocess)
-        5. [Effect Profile Process Ziggeo.effectProfileProcess](#method-effect-profile-process-ziggeo.effectprofileprocess)
-        6. [Effect Profile Process Ziggeo.effectProfileProcess](#method-effect-profile-process-ziggeo.effectprofileprocess)
+        1. [Effect Profile Process Index](#method-effect-profile-process-index)
+        2. [Effect Profile Process Get](#method-effect-profile-process-get)
+        3. [Effect Profile Process Delete](#method-effect-profile-process-delete)
+        4. [Effect Profile Process Create Filter Process](#method-effect-profile-process-create-filter-process)
+        5. [Effect Profile Process Create Watermark Process](#method-effect-profile-process-create-watermark-process)
+        6. [Effect Profile Process Edit Watermark Process](#method-effect-profile-process-edit-watermark-process)
     9. [Methods for Meta Profiles](#method-meta-profiles)
-        1. [Meta Profiles Ziggeo.metaProfiles](#method-meta-profiles-ziggeo.metaprofiles)
-        2. [Meta Profiles Ziggeo.metaProfiles](#method-meta-profiles-ziggeo.metaprofiles)
-        3. [Meta Profiles Ziggeo.metaProfiles](#method-meta-profiles-ziggeo.metaprofiles)
-        4. [Meta Profiles Ziggeo.metaProfiles](#method-meta-profiles-ziggeo.metaprofiles)
+        1. [Meta Profiles Create](#method-meta-profiles-create)
+        2. [Meta Profiles Index](#method-meta-profiles-index)
+        3. [Meta Profiles Get](#method-meta-profiles-get)
+        4. [Meta Profiles Delete](#method-meta-profiles-delete)
     10. [Methods for Meta Profile Process](#method-meta-profile-process)
-        1. [Meta Profile Process Ziggeo.metaProfileProcess](#method-meta-profile-process-ziggeo.metaprofileprocess)
-        2. [Meta Profile Process Ziggeo.metaProfileProcess](#method-meta-profile-process-ziggeo.metaprofileprocess)
-        3. [Meta Profile Process Ziggeo.metaProfileProcess](#method-meta-profile-process-ziggeo.metaprofileprocess)
-        4. [Meta Profile Process Ziggeo.metaProfileProcess](#method-meta-profile-process-ziggeo.metaprofileprocess)
-        5. [Meta Profile Process Ziggeo.metaProfileProcess](#method-meta-profile-process-ziggeo.metaprofileprocess)
-        6. [Meta Profile Process Ziggeo.metaProfileProcess](#method-meta-profile-process-ziggeo.metaprofileprocess)
+        1. [Meta Profile Process Index](#method-meta-profile-process-index)
+        2. [Meta Profile Process Get](#method-meta-profile-process-get)
+        3. [Meta Profile Process Delete](#method-meta-profile-process-delete)
+        4. [Meta Profile Process Create Video Analysis Process](#method-meta-profile-process-create-video-analysis-process)
+        5. [Meta Profile Process Create Audio Transcription Process](#method-meta-profile-process-create-audio-transcription-process)
+        6. [Meta Profile Process Create Nsfw Process](#method-meta-profile-process-create-nsfw-process)
+        7. [Meta Profile Process Create Profanity Process](#method-meta-profile-process-create-profanity-process)
     11. [Methods for Webhooks](#method-webhooks)
-        1. [Webhooks Ziggeo.webhooks](#method-webhooks-ziggeo.webhooks)
-        2. [Webhooks Ziggeo.webhooks](#method-webhooks-ziggeo.webhooks)
-        3. [Webhooks Ziggeo.webhooks](#method-webhooks-ziggeo.webhooks)
+        1. [Webhooks Create](#method-webhooks-create)
+        2. [Webhooks Confirm](#method-webhooks-confirm)
+        3. [Webhooks Delete](#method-webhooks-delete)
     12. [Methods for Analytics](#method-analytics)
-        1. [Analytics Ziggeo.analytics](#method-analytics-ziggeo.analytics)
-6. [License](#license)
+        1. [Analytics Get](#method-analytics-get)
+5. [License](#license)
 
 
 ## Why Ziggeo's C# Server Side SDK? <a name="why-us"></a>
@@ -170,16 +171,16 @@ Config is optional and if not specified (recommended), the Config file will be u
 
 Currently available methods are branched off within different categories:
 
-1.Videos
-1.Streams
-1.Authtokens
-1.Application
-1.Effect Profiles
-1.Effect Profile Process
-1.Meta Profiles
-1.Meta Profile Process
-1.Webhooks
-1.Analytics
+1. Videos
+2. Streams
+3. Authtokens
+4. Application
+5. Effect Profiles
+6. Effect Profile Process
+7. Meta Profiles
+8. Meta Profile Process
+9. Webhooks
+10. Analytics
 
 Each of this sections has their own actions and they are explained bellow
 
@@ -190,7 +191,7 @@ Each of this sections has their own actions and they are explained bellow
 
 The videos resource allows you to access all single videos. Each video may contain more than one stream.
 
-#### Index
+#### Index<a name="method-videos-index"></a>
 
 Query an array of videos (will return at most 50 videos by default). Newest videos come first.
 
@@ -205,7 +206,7 @@ ziggeo.videos().index(Dictionary<string, string> arguments)
 - states: *Filter videos by state*
 - tags: *Filter the search result to certain tags, encoded as a comma-separated string*
 
-#### Count
+#### Count<a name="method-videos-count"></a>
 
 Get the video count for the application.
 
@@ -217,7 +218,7 @@ ziggeo.videos().count(Dictionary<string, string> arguments)
 - states: *Filter videos by state*
 - tags: *Filter the search result to certain tags, encoded as a comma-separated string*
 
-#### Get
+#### Get<a name="method-videos-get"></a>
 
 Get a single video by token or key.
 
@@ -225,7 +226,7 @@ Get a single video by token or key.
 ziggeo.videos().get(string token_or_key)
 ```
 
-#### Get Bulk
+#### Get Bulk<a name="method-videos-get-bulk"></a>
 
 Get multiple videos by tokens or keys.
 
@@ -236,7 +237,7 @@ ziggeo.videos().get_bulk(Dictionary<string, string> arguments)
  Arguments
 - tokens_or_keys: *Comma-separated list with the desired videos tokens or keys (Limit: 100 tokens or keys).*
 
-#### Stats Bulk
+#### Stats Bulk<a name="method-videos-stats-bulk"></a>
 
 Get stats for multiple videos by tokens or keys.
 
@@ -248,7 +249,7 @@ ziggeo.videos().stats_bulk(Dictionary<string, string> arguments)
 - tokens_or_keys: *Comma-separated list with the desired videos tokens or keys (Limit: 100 tokens or keys).*
 - summarize: *Boolean. Set it to TRUE to get the stats summarized. Set it to FALSE to get the stats for each video in a separate array. Default: TRUE.*
 
-#### Download Video
+#### Download Video<a name="method-videos-download-video"></a>
 
 Download the video data file
 
@@ -256,7 +257,7 @@ Download the video data file
 ziggeo.videos().download_video(string token_or_key)
 ```
 
-#### Download Image
+#### Download Image<a name="method-videos-download-image"></a>
 
 Download the image data file
 
@@ -264,7 +265,7 @@ Download the image data file
 ziggeo.videos().download_image(string token_or_key)
 ```
 
-#### Get Stats
+#### Get Stats<a name="method-videos-get-stats"></a>
 
 Get the video's stats
 
@@ -272,7 +273,7 @@ Get the video's stats
 ziggeo.videos().get_stats(string token_or_key)
 ```
 
-#### Push To Service
+#### Push To Service<a name="method-videos-push-to-service"></a>
 
 Push a video to a provided push service.
 
@@ -283,7 +284,7 @@ ziggeo.videos().push_to_service(string token_or_key, Dictionary<string, string> 
  Arguments
 - pushservicetoken: *Push Services's token (from the Push Services configured for the app)*
 
-#### Apply Effect
+#### Apply Effect<a name="method-videos-apply-effect"></a>
 
 Apply an effect profile to a video.
 
@@ -294,7 +295,7 @@ ziggeo.videos().apply_effect(string token_or_key, Dictionary<string, string> arg
  Arguments
 - effectprofiletoken: *Effect Profile token (from the Effect Profiles configured for the app)*
 
-#### Apply Meta
+#### Apply Meta<a name="method-videos-apply-meta"></a>
 
 Apply a meta profile to a video.
 
@@ -305,7 +306,7 @@ ziggeo.videos().apply_meta(string token_or_key, Dictionary<string, string> argum
  Arguments
 - metaprofiletoken: *Meta Profile token (from the Meta Profiles configured for the app)*
 
-#### Update
+#### Update<a name="method-videos-update"></a>
 
 Update single video by token or key.
 
@@ -322,7 +323,7 @@ ziggeo.videos().update(string token_or_key, Dictionary<string, string> arguments
 - expiration_days: *After how many days will this video be deleted*
 - expire_on: *On which date will this video be deleted. String in ISO 8601 format: YYYY-MM-DD*
 
-#### Update Bulk
+#### Update Bulk<a name="method-videos-update-bulk"></a>
 
 Update multiple videos by token or key.
 
@@ -339,7 +340,7 @@ ziggeo.videos().update_bulk(Dictionary<string, string> arguments)
 - expiration_days: *After how many days will this video be deleted*
 - expire_on: *On which date will this video be deleted. String in ISO 8601 format: YYYY-MM-DD*
 
-#### Delete
+#### Delete<a name="method-videos-delete"></a>
 
 Delete a single video by token or key.
 
@@ -347,7 +348,7 @@ Delete a single video by token or key.
 ziggeo.videos().delete(string token_or_key)
 ```
 
-#### Create
+#### Create<a name="method-videos-create"></a>
 
 Create a new video.
 
@@ -362,8 +363,11 @@ ziggeo.videos().create(Dictionary<string, string> arguments, string file)
 - tags: *Video Tags*
 - key: *Unique (optional) name of video*
 - volatile: *Automatically removed this video if it remains empty*
+- effect_profile: *Set the effect profile that you want to have applied to your video.*
+- meta_profile: *Set the meta profile that you want to have applied to your video once created.*
+- video_profile: *Set the video profile that you want to have applied to your video as you create it.*
 
-#### Analytics
+#### Analytics<a name="method-videos-analytics"></a>
 
 Get analytics for a specific videos with the given params
 
@@ -382,7 +386,7 @@ ziggeo.videos().analytics(string token_or_key, Dictionary<string, string> argume
 
 The streams resource allows you to directly access all streams associated with a single video.
 
-#### Index
+#### Index<a name="method-streams-index"></a>
 
 Return all streams associated with a video
 
@@ -393,7 +397,7 @@ ziggeo.streams().index(string video_token_or_key, Dictionary<string, string> arg
  Arguments
 - states: *Filter streams by state*
 
-#### Get
+#### Get<a name="method-streams-get"></a>
 
 Get a single stream
 
@@ -401,7 +405,7 @@ Get a single stream
 ziggeo.streams().get(string video_token_or_key, string token_or_key)
 ```
 
-#### Download Video
+#### Download Video<a name="method-streams-download-video"></a>
 
 Download the video data associated with the stream
 
@@ -409,7 +413,7 @@ Download the video data associated with the stream
 ziggeo.streams().download_video(string video_token_or_key, string token_or_key)
 ```
 
-#### Download Image
+#### Download Image<a name="method-streams-download-image"></a>
 
 Download the image data associated with the stream
 
@@ -417,7 +421,7 @@ Download the image data associated with the stream
 ziggeo.streams().download_image(string video_token_or_key, string token_or_key)
 ```
 
-#### Push To Service
+#### Push To Service<a name="method-streams-push-to-service"></a>
 
 Push a stream to a provided push service.
 
@@ -428,7 +432,7 @@ ziggeo.streams().push_to_service(string video_token_or_key, string token_or_key,
  Arguments
 - pushservicetoken: *Push Services's token (from the Push Services configured for the app)*
 
-#### Delete
+#### Delete<a name="method-streams-delete"></a>
 
 Delete the stream
 
@@ -436,7 +440,7 @@ Delete the stream
 ziggeo.streams().delete(string video_token_or_key, string token_or_key)
 ```
 
-#### Create
+#### Create<a name="method-streams-create"></a>
 
 Create a new stream
 
@@ -447,7 +451,7 @@ ziggeo.streams().create(string video_token_or_key, Dictionary<string, string> ar
  Arguments
 - file: *Video file to be uploaded*
 
-#### Attach Image
+#### Attach Image<a name="method-streams-attach-image"></a>
 
 Attaches an image to a new stream
 
@@ -458,7 +462,7 @@ ziggeo.streams().attach_image(string video_token_or_key, string token_or_key, Di
  Arguments
 - file: *Image file to be attached*
 
-#### Attach Video
+#### Attach Video<a name="method-streams-attach-video"></a>
 
 Attaches a video to a new stream
 
@@ -469,7 +473,7 @@ ziggeo.streams().attach_video(string video_token_or_key, string token_or_key, Di
  Arguments
 - file: *Video file to be attached*
 
-#### Attach Subtitle
+#### Attach Subtitle<a name="method-streams-attach-subtitle"></a>
 
 Attaches a subtitle to the stream.
 
@@ -482,7 +486,7 @@ ziggeo.streams().attach_subtitle(string video_token_or_key, string token_or_key,
 - label: *Subtitle reference*
 - data: *Actual subtitle*
 
-#### Bind
+#### Bind<a name="method-streams-bind"></a>
 
 Closes and submits the stream
 
@@ -497,7 +501,7 @@ ziggeo.streams().bind(string video_token_or_key, string token_or_key, Dictionary
 
 The auth token resource allows you to manage authorization settings for video objects.
 
-#### Get
+#### Get<a name="method-authtokens-get"></a>
 
 Get a single auth token by token.
 
@@ -505,7 +509,7 @@ Get a single auth token by token.
 ziggeo.authtokens().get(string token)
 ```
 
-#### Update
+#### Update<a name="method-authtokens-update"></a>
 
 Update single auth token by token.
 
@@ -521,7 +525,7 @@ ziggeo.authtokens().update(string token_or_key, Dictionary<string, string> argum
 - session_limit: *Maximal number of sessions*
 - grants: *Permissions this tokens grants*
 
-#### Delete
+#### Delete<a name="method-authtokens-delete"></a>
 
 Delete a single auth token by token.
 
@@ -529,7 +533,7 @@ Delete a single auth token by token.
 ziggeo.authtokens().delete(string token_or_key)
 ```
 
-#### Create
+#### Create<a name="method-authtokens-create"></a>
 
 Create a new auth token.
 
@@ -550,7 +554,7 @@ ziggeo.authtokens().create(Dictionary<string, string> arguments)
 
 The application token resource allows you to manage your application.
 
-#### Get
+#### Get<a name="method-application-get"></a>
 
 Read application.
 
@@ -558,7 +562,7 @@ Read application.
 ziggeo.application().get()
 ```
 
-#### Update
+#### Update<a name="method-application-update"></a>
 
 Update application.
 
@@ -577,7 +581,7 @@ ziggeo.application().update(Dictionary<string, string> arguments)
 - client_cannot_access_unaccepted_videos: *Client cannot view unaccepted videos*
 - enable_video_subpages: *Enable hosted video pages*
 
-#### Get Stats
+#### Get Stats<a name="method-application-get-stats"></a>
 
 Read application stats
 
@@ -593,7 +597,7 @@ ziggeo.application().get_stats(Dictionary<string, string> arguments)
 
 The effect profiles resource allows you to access and create effect profiles for your app. Each effect profile may contain one process or more.
 
-#### Create
+#### Create<a name="method-effect-profiles-create"></a>
 
 Create a new effect profile.
 
@@ -606,7 +610,7 @@ ziggeo.effectProfiles().create(Dictionary<string, string> arguments)
 - title: *Effect profile title.*
 - default_effect: *Boolean. If TRUE, sets an effect profile as default. If FALSE, removes the default status for the given effect*
 
-#### Index
+#### Index<a name="method-effect-profiles-index"></a>
 
 Get list of effect profiles.
 
@@ -619,7 +623,7 @@ ziggeo.effectProfiles().index(Dictionary<string, string> arguments)
 - skip: *Skip the first [n] entries.*
 - reverse: *Reverse the order in which effect profiles are returned.*
 
-#### Get
+#### Get<a name="method-effect-profiles-get"></a>
 
 Get a single effect profile
 
@@ -627,7 +631,7 @@ Get a single effect profile
 ziggeo.effectProfiles().get(string token_or_key)
 ```
 
-#### Delete
+#### Delete<a name="method-effect-profiles-delete"></a>
 
 Delete the effect profile
 
@@ -635,7 +639,7 @@ Delete the effect profile
 ziggeo.effectProfiles().delete(string token_or_key)
 ```
 
-#### Update
+#### Update<a name="method-effect-profiles-update"></a>
 
 Updates an effect profile.
 
@@ -651,7 +655,7 @@ ziggeo.effectProfiles().update(string token_or_key, Dictionary<string, string> a
 
 The process resource allows you to directly access all process associated with a single effect profile.
 
-#### Index
+#### Index<a name="method-effect-profile-process-index"></a>
 
 Return all processes associated with a effect profile
 
@@ -662,7 +666,7 @@ ziggeo.effectProfileProcess().index(string effect_token_or_key, Dictionary<strin
  Arguments
 - states: *Filter streams by state*
 
-#### Get
+#### Get<a name="method-effect-profile-process-get"></a>
 
 Get a single process
 
@@ -670,7 +674,7 @@ Get a single process
 ziggeo.effectProfileProcess().get(string effect_token_or_key, string token_or_key)
 ```
 
-#### Delete
+#### Delete<a name="method-effect-profile-process-delete"></a>
 
 Delete the process
 
@@ -678,7 +682,7 @@ Delete the process
 ziggeo.effectProfileProcess().delete(string effect_token_or_key, string token_or_key)
 ```
 
-#### Create Filter Process
+#### Create Filter Process<a name="method-effect-profile-process-create-filter-process"></a>
 
 Create a new filter effect process
 
@@ -689,7 +693,7 @@ ziggeo.effectProfileProcess().create_filter_process(string effect_token_or_key, 
  Arguments
 - effect: *Effect to be applied in the process*
 
-#### Create Watermark Process
+#### Create Watermark Process<a name="method-effect-profile-process-create-watermark-process"></a>
 
 Attaches an image to a new stream
 
@@ -703,7 +707,7 @@ ziggeo.effectProfileProcess().create_watermark_process(string effect_token_or_ke
 - horizontal_position: *Specify the horizontal position of your watermark (a value between 0.0 and 1.0)*
 - video_scale: *Specify the image scale of your watermark (a value between 0.0 and 1.0)*
 
-#### Edit Watermark Process
+#### Edit Watermark Process<a name="method-effect-profile-process-edit-watermark-process"></a>
 
 Edits an existing watermark process.
 
@@ -722,7 +726,7 @@ ziggeo.effectProfileProcess().edit_watermark_process(string effect_token_or_key,
 
 The meta profiles resource allows you to access and create meta profiles for your app. Each meta profile may contain one process or more.
 
-#### Create
+#### Create<a name="method-meta-profiles-create"></a>
 
 Create a new meta profile.
 
@@ -734,7 +738,7 @@ ziggeo.metaProfiles().create(Dictionary<string, string> arguments)
 - key: *Meta Profile profile key.*
 - title: *Meta Profile profile title.*
 
-#### Index
+#### Index<a name="method-meta-profiles-index"></a>
 
 Get list of meta profiles.
 
@@ -747,7 +751,7 @@ ziggeo.metaProfiles().index(Dictionary<string, string> arguments)
 - skip: *Skip the first [n] entries.*
 - reverse: *Reverse the order in which meta profiles are returned.*
 
-#### Get
+#### Get<a name="method-meta-profiles-get"></a>
 
 Get a single meta profile
 
@@ -755,7 +759,7 @@ Get a single meta profile
 ziggeo.metaProfiles().get(string token_or_key)
 ```
 
-#### Delete
+#### Delete<a name="method-meta-profiles-delete"></a>
 
 Delete the meta profile
 
@@ -768,7 +772,7 @@ ziggeo.metaProfiles().delete(string token_or_key)
 
 The process resource allows you to directly access all process associated with a single meta profile.
 
-#### Index
+#### Index<a name="method-meta-profile-process-index"></a>
 
 Return all processes associated with a meta profile
 
@@ -776,7 +780,7 @@ Return all processes associated with a meta profile
 ziggeo.metaProfileProcess().index(string meta_token_or_key)
 ```
 
-#### Get
+#### Get<a name="method-meta-profile-process-get"></a>
 
 Get a single process
 
@@ -784,7 +788,7 @@ Get a single process
 ziggeo.metaProfileProcess().get(string meta_token_or_key, string token_or_key)
 ```
 
-#### Delete
+#### Delete<a name="method-meta-profile-process-delete"></a>
 
 Delete the process
 
@@ -792,7 +796,7 @@ Delete the process
 ziggeo.metaProfileProcess().delete(string meta_token_or_key, string token_or_key)
 ```
 
-#### Create Video Analysis Process
+#### Create Video Analysis Process<a name="method-meta-profile-process-create-video-analysis-process"></a>
 
 Create a new video analysis meta process
 
@@ -800,7 +804,7 @@ Create a new video analysis meta process
 ziggeo.metaProfileProcess().create_video_analysis_process(string meta_token_or_key)
 ```
 
-#### Create Audio Transcription Process
+#### Create Audio Transcription Process<a name="method-meta-profile-process-create-audio-transcription-process"></a>
 
 Create a new audio transcription meta process
 
@@ -808,7 +812,7 @@ Create a new audio transcription meta process
 ziggeo.metaProfileProcess().create_audio_transcription_process(string meta_token_or_key)
 ```
 
-#### Create Nsfw Process
+#### Create Nsfw Process<a name="method-meta-profile-process-create-nsfw-process"></a>
 
 Create a new nsfw filter meta process
 
@@ -819,12 +823,23 @@ ziggeo.metaProfileProcess().create_nsfw_process(string meta_token_or_key, Dictio
  Arguments
 - nsfw_action: *One of the following three: approve, reject, nothing.*
 
+#### Create Profanity Process<a name="method-meta-profile-process-create-profanity-process"></a>
+
+Create a new profanity filter meta process
+
+```csharp
+ziggeo.metaProfileProcess().create_profanity_process(string meta_token_or_key, Dictionary<string, string> arguments)
+```
+
+ Arguments
+- profanity_action: *One of the following three: approve, reject, nothing.*
+
 ### Webhooks<a name="method-webhooks"></a>
 
 
 The webhooks resource allows you to create or delete webhooks related to a given application.
 
-#### Create
+#### Create<a name="method-webhooks-create"></a>
 
 Create a new webhook for the given url to catch the given events.
 
@@ -837,7 +852,7 @@ ziggeo.webhooks().create(Dictionary<string, string> arguments)
 - encoding: *Data encoding to be used by the webhook to send the events.*
 - events: *Comma-separated list of the events the webhook will catch. They must be valid webhook type events.*
 
-#### Confirm
+#### Confirm<a name="method-webhooks-confirm"></a>
 
 Confirm a webhook using its ID and the corresponding validation code.
 
@@ -849,7 +864,7 @@ ziggeo.webhooks().confirm(Dictionary<string, string> arguments)
 - webhook_id: *Webhook ID that's returned in the creation call.*
 - validation_code: *Validation code that is sent to the webhook when created.*
 
-#### Delete
+#### Delete<a name="method-webhooks-delete"></a>
 
 Delete a webhook using its URL.
 
@@ -865,7 +880,7 @@ ziggeo.webhooks().delete(Dictionary<string, string> arguments)
 
 The analytics resource allows you to access the analytics for the given application
 
-#### Get
+#### Get<a name="method-analytics-get"></a>
 
 Get analytics for the given params
 
@@ -885,6 +900,6 @@ ziggeo.analytics().get(Dictionary<string, string> arguments)
 
 ## License <a name="license"></a>
 
-Copyright (c) 2013-2020 Ziggeo
+Copyright (c) 2013-2021 Ziggeo
  
 Apache 2.0 License

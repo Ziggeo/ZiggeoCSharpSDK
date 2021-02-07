@@ -35,5 +35,9 @@ public class ZiggeoMetaProfileProcess {
         return this.application.connect().postJSON("/v1/metaprofiles/" + meta_token_or_key + "/process/nsfw", data, null);
     }
 
+    public JObject create_profanity_process(string meta_token_or_key, Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/v1/metaprofiles/" + meta_token_or_key + "/process/profanity", data, null);
+    }
+
 }
 
