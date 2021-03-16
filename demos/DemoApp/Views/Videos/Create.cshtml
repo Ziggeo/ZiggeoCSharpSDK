@@ -1,0 +1,22 @@
+@model VideosCreateModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Create a new video";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            @ViewData["Title"]
+        </h1>
+        
+        <div class="col-12" style="margin-bottom: 15px">
+            <partial name="_SubTitle"/>
+        </div>
+
+        <div class="col-12">
+            <partial name="_Form" model="@Model"/>
+        </div>
+    </div>
+</div>

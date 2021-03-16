@@ -1,0 +1,31 @@
+@model ProfileCreateModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Add Effect Profile";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            Add New Effect Profile
+        </h1>
+        
+        <div class="col-12" style="margin-bottom: 15px">
+            <a href="/Profile" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">
+                All Available Profiles
+            </a>
+            <a target="_blank" 
+               href="https://ziggeo.com/docs/dashboard/profiles"
+               class="btn btn-secondary btn-sm active"
+               role="button" aria-pressed="true"
+           >
+                Ziggeo Profile Documentation
+            </a>
+        </div>
+
+        <div class="col-12">
+            <partial name="_Form" model="@Model"/>
+        </div>
+    </div>
+</div>

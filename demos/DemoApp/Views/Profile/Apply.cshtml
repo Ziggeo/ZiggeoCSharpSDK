@@ -1,0 +1,158 @@
+@model ProfileViewModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Add Effect Profile";
+}
+
+<script>
+    let addEffectProfileForm, submitButton, profileSelectSelector, viedoSelectSelector, selectElementsSelector;
+    let state = {
+        videoToken: "",
+        profileValue: "",
+    };
+        
+    /**
+    * Verify on each step
+    */
+    const verify = () => {
+        hideMessage();
+        console.log('State', state);
+        const {videoToken, profileValue} = state;
+        if (videoToken && profileValue) {
+            submitButton.prop("disabled", false);
+            return true;
+        } else {
+            showMessage("Please fill all required fields", "danger");
+            submitButton.prop("disabled", true);
+            return false;
+        }
+    }
+    
+    const onSelectChange = (ev) => {
+        ev.preventDefault();
+        const {name, value} = ev.target;
+        state[name] = value;
+        // state = {...state, name: value};
+        verify();
+    }
+     
+    const addEffectProfile = () => { 
+        hideMessage();
+        hideLoader();
+       
+        if (verify()) {
+            const {videoToken, profileValue} = state;
+            const postData = { videoToken, profile: profileValue };
+            // const data = addEffectProfileForm.serialize();
+            $.ajax({
+                url: "/Profile/AddEffect",
+                method: "POST",
+                // data: {addEffectModel: JSON.stringify(postData)},
+                data: JSON.stringify(postData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: () => {
+                    showLoader();
+                    console.log('Request Started');
+                },
+                success: (res) => {
+                    const {success, message} = res;
+                    success ? showMessage(message) : showMessage("We have response: " + JSON.stringify(res), "danger");
+                    hideLoader();
+                },
+                error: (error) => {
+                    const {readyState, responseText} = error;
+                    if (readyState === 4) {
+                        showMessage(responseText, "danger"); 
+                    } else {
+                        showMessage("We have an error" + JSON.stringify(error), "danger"); 
+                    }
+                    hideLoader();
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {                  
+                    let message = "HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText; 
+                    showMessage(message, "danger");
+                    hideLoader();
+                }
+            }); 
+        }
+    }
+         
+    window.addEventListener("load", (ev) => { 
+        addEffectProfileForm = $("#apply-effect-form");
+        submitButton = jQuery("#submit-button");
+        submitButton.prop("disabled", false);
+        profileSelectSelector = $("#profile-select");
+        videoSelectSelector = $("#video-select");
+    
+        selectElementsSelector = $(".select-element");
+        $.each(selectElementsSelector, (index, element) => {
+            element.onchange = (ev) => onSelectChange(ev);
+        });
+    });
+</script>
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            Add New Effect Profile
+        </h1>
+        <div class="col-12 col-md-offset-3 col-md-6">
+            <form id="apply-effect-form" class="form" onsubmit="return false">
+                <div class="profile">
+                    <label for="profile-select">Apply Profile</label>
+                    @if (@Model.allProfiles.Count > 0)
+                    {
+                        <select id="profile-select" 
+                                class="form-control select-element" name="profileValue"
+                                onchange="(ev) => onSelectChange(ev)"
+                        >
+                            <option value="">Please Select Profile</option>
+                            @foreach (var p in @Model.allProfiles)
+                            {
+                                <option key="@p.token">@p.title</option> 
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <p class="text-danger">
+                            You don't have any video profiles. Please read more information how you can 
+                            <a target="_blank" href="https://ziggeo.com/docs/dashboard/profiles/video-profiles/create-profile">
+                                create video profile
+                            </a>
+                        </p>
+                    }
+                </div>
+                
+                <div class="form-group">
+                    <label for="video-select">Please select a video</label>
+                    @if (@Model.allVideos.Count > 0)
+                    {
+                        <select 
+                            id="video-select" class="form-control select-element" 
+                            name="videoToken"
+                        >
+                            <option value="">Please Select Video</option>
+                            @foreach (var v in @Model.allVideos)
+                            {
+                                <option key="@v.token">@v.token</option> 
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <p class="text-warning">Please record at least one video before you can apply any profile</p>
+                    }
+                </div>
+                <button 
+                    id="submit-button" type="submit" 
+                    class="btn btn-success" 
+                    onclick="addEffectProfile()"
+                    disabled
+                >Apply Profile</button>
+            </form>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    
+    <h1>Available Links with example</h1>
+
+    <div class="row">
+        @foreach (var route in @Model.routes)
+        {
+            <div class="col-12">
+                <p>@route.Key</p>
+                <ul class="list-group list-group-horizontal">
+                    @foreach (var val in @route.Value)
+                    {
+                        <li class="list-group-item">
+                            <a class="btn btn-link" href="@val.Value">@val.Key</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>

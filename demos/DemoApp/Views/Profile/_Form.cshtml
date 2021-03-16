@@ -1,0 +1,181 @@
+<script>
+    let URL = "/Profile/Add", addEffectProfileForm, submitButton, profileKeySelector, profileTiitleSelector;
+    let state = {
+        isCreating: true,
+        profileKey: "",
+        profileTitle: "",
+        profileToken: "",
+        isDefault: false
+    };
+    
+    if ("@Model.isCreate.ToString()".toUpperCase() !== "TRUE") {
+        state = {...state,  isCreating: false};
+        URL = "/Profile/Edit";
+    }
+        
+    /**
+    * Verify on each step
+    */
+    const verify = () => {
+        hideMessage();
+        console.log('State', state);
+        const {profileKey, profileTitle, isCreating} = state;
+        if ((profileKey && profileTitle) || !isCreating) {
+            submitButton.prop("disabled", false);
+            return true;
+        } else {
+            showMessage("Please fill all required fields", "danger");
+            submitButton.prop("disabled", true);
+            return false;
+        }
+    }
+    
+    
+    const onInputChangeHandler = (ev) => {
+        ev.preventDefault();
+        const { name, value } = ev.target;
+        state[name] = value;
+        verify();
+    }
+    
+    const checkBoxHandler = (ev) => {
+        const { name, checked } = ev.target;
+        state[name] = checked;
+        verify();
+    }   
+    
+    const addEffectProfile = () => { 
+        hideMessage();
+        hideLoader(); 
+        if (verify()) {
+            const { profileKey, profileTitle, isDefault, profileToken } = state;
+            const postData = { profileKey, profileTitle, isDefault, profileToken };
+            // const data = addEffectProfileForm.serialize();
+            $.ajax({
+                url: URL,
+                method: "POST",
+                // data: {addEffectModel: JSON.stringify(postData)},
+                data: JSON.stringify(postData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: () => {
+                    showLoader();
+                    console.log('Request Started');
+                },
+                
+                success: (res) => {
+                    const {success, message} = res;
+                    console.log("success Response: ",  message);
+                    Boolean(success) ? showMessage(message) : showMessage("We have response: " + JSON.stringify(res), "danger");
+                    hideLoader();
+                },
+                error: (error) => {
+                    const {readyState, responseText} = error;
+                    if (readyState === 4) {
+                        showMessage(responseText, "danger"); 
+                    } else {
+                        showMessage("We have an error" + JSON.stringify(error), "danger"); 
+                    }
+                    hideLoader();
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {                  
+                    let message = "HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText; 
+                    showMessage(message, "danger");
+                    hideLoader();
+                }
+            }); 
+        }
+    }
+         
+    window.addEventListener("load", (ev) => { 
+        addEffectProfileForm = $("#apply-effect-form");
+        submitButton = jQuery("#submit-button");
+        submitButton.prop("disabled", false);
+        profileSelectSelector = $("#profile-select");
+        videoSelectSelector = $("#video-select");
+    
+        const inputElementsSelector = $(".text-input");
+        if (inputElementsSelector)  {
+            $.each(inputElementsSelector, (index, element) => {
+                element.onkeyup = (ev) => onInputChangeHandler(ev);
+            });
+        }
+        
+        const hiddenInputs = $(".hidden-inputs");
+        if (hiddenInputs) { 
+            $.each(hiddenInputs, (index, element) => {
+                const name = $(element).attr("name");
+                const value = $(element).val();
+                if (name && value) {
+                    state[name] = value;
+                }
+            });
+        }
+        
+        $("#is-default").on("change" , (ev) => checkBoxHandler(ev));        
+    });
+</script>
+
+<form id="apply-effect-form" class="form" onsubmit="return false">
+    
+    @if (@Model.isCreate)
+    {
+        
+        <div class="form-group row">
+            <label for="profile-title" class="col-sm-3 col-form-label">Profile Title</label>
+            <div class="col-sm-9">
+                <input
+                    id="profile-title" name="profileTitle"
+                    placeholder="Profile Title"
+                    value="@Model.profileTitle"
+                    class="text-input form-control"
+                />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="profile-key" class="col-sm-3 col-form-label">Please Key</label>
+            <div class="col-sm-9">
+                <input
+                    id="profile-key" name="profileKey"
+                    value="@Model.profileKey"
+                    class="text-input form-control" placeholder="Profile Key"
+                    />
+            </div>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" class="hidden-inputs" name="profileToken" value="@Model.profileToken" />
+    }
+
+    <div class="form-group">
+        <div class="form-check">
+            <input
+                id="is-default" type="checkbox"
+                class="checkbox-input form-check-input"
+                checked="@Model.isDefault"
+                name="isDefault"
+                />
+            <label for="is-default" class="form-check-label">Will be default ?</label>
+        </div>
+    </div>
+    @if (@Model.isCreate)
+    {
+        <button
+            id="submit-button" type="submit"
+            class="btn btn-success"
+            onclick="addEffectProfile()"
+            disabled
+        >Create Profile</button>
+    }
+    else
+    {
+        <button
+            id="submit-button" type="submit"
+            class="btn btn-success"
+            onclick="addEffectProfile()"
+            disabled
+        >Update Profile</button>
+    }
+</form>

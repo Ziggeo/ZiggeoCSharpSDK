@@ -1,0 +1,223 @@
+@model VideosViewModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Latest 5 videos";
+}
+
+<script>
+    const state = {
+        tokens: []
+    };
+    
+    const download = (filename, text) => {
+        var pom = document.createElement('a');
+        console.log('file >> ', text);
+        pom.setAttribute('href', 'data:video/mp4;base64,' + encodeURIComponent(text));
+        // pom.setAttribute('href', encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+    
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }
+    }
+    
+    const setAllBulkButtonsActivityStatus = (inactive = true) => {
+        const bulkActionButtons = $(".bulk-action-button");
+        if (bulkActionButtons) {
+            $.each(bulkActionButtons, (index, element) => {
+                $(element).prop('disabled', inactive);
+            });
+        }
+    }
+    
+    const handleBulkActionButonClick = (ev) => {
+        
+    }
+     
+    const checkInEachStep = () => {
+        const { tokens } = state;
+        if (tokens)
+            setAllBulkButtonsActivityStatus(tokens.length <= 0); 
+    }
+    
+    const onBulkCheckerHandler = (ev) => {
+        ev.preventDefault();
+        const {value, name, checked} = ev.target;
+        if (checked) {
+            if (state.tokens.indexOf(value) === -1) {
+                state[name].push(value);
+                checkInEachStep();
+            }
+        } else {
+           state[name] = state[name].filter((token) => token !== value);
+           checkInEachStep();
+        }
+    }
+    
+    const onClickHandler = (ev, url) => {
+        ev.preventDefault();
+        const button = $(ev.target);
+        const { tokens } = state;
+        const tokensQuery = tokens.join(',');
+        const queryData = button.attr("data-url-query");
+        const redirect = button.attr("data-url-redirect");
+                
+        if (typeof redirect !== "undefined" && redirect) {
+            console.log('In redirect');
+            if (typeof queryData === "string" && typeof tokensQuery === 'string') {
+                location.href = url + "?tokens=" + tokensQuery + "&" + queryData;
+            } else if (typeof tokensQuery === 'string') {
+               location.href = url + "?tokens=" + tokensQuery;
+            } else if (typeof queryData === "string") {
+                location.href = url + "?" + queryData;
+            }
+            return;
+        } 
+        
+        $.ajax(url, {
+            beforeSend: () => {
+                showLoader();
+            },             
+            
+            success: (res) => {
+                const {success, message, type, data} = res;
+                success ? showMessage(message) : showMessage("We have response: " + JSON.stringify(res), "danger");
+                if (success && typeof data !== "undefined") {
+                    if (typeof typeof type !== "undefined") {
+                        if (type === "stream") {
+                           download("video.mp4", data);
+                        }
+                    } 
+                }
+                hideLoader();
+                // location.reload();
+            },
+            
+            error: (error) => {
+                const {readyState, responseText} = error;
+                if (readyState === 4) {
+                    showMessage(responseText, "danger"); 
+                } else {
+                    showMessage("We have an error" + JSON.stringify(error), "danger"); 
+                }
+                hideLoader();
+            },
+        });
+    };
+    
+    
+    window.addEventListener("load", (ev) => { 
+        
+        const bulkActionsCheckSelector = $(".bulk-action-checker");
+        $.each(bulkActionsCheckSelector, (index, element) => {
+            element.onchange = (ev) => onBulkCheckerHandler(ev);
+        });
+        
+        
+        const bulkActionButtons = $(".bulk-action-button");
+        if (bulkActionButtons) {
+            setAllBulkButtonsActivityStatus();
+            $.each(bulkActionButtons, (index, element) => {
+                const url = $(element).attr("data-url");
+                element.onclick = (ev) => onClickHandler(ev, url);
+            });
+            bulkActionButtons.onclick = (ev) => handleBulkActionButonClick(ev);
+        }
+    
+        const actionsButtonsSelector = $(".btn-action");
+        $.each(actionsButtonsSelector, (index, element) => {
+            const url = $(element).attr("data-url");
+            element.onclick = (ev) => onClickHandler(ev, url);
+        });
+    }); 
+</script>
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            @ViewData["Title"]
+        </h1>
+        
+        <partial name="_SubTitle" />
+        
+        <hr class="col-12"/>
+        <div class="col-xs-12">
+            <code>
+                <strong>You totally have @ViewData["allVideosCount"] count of videos in current application.</strong>
+                <br />
+                Limit of showing videos: @ViewData["limitCount"]. You can set one or more in queryString settings like 
+                URL?limit=LIMIT_NUMBER&skip=SKIP_NUMBER&reverse=TRUE_OR_FALSE&states=STATES&tags=TAGS
+            </code>
+        </div>
+        <hr class="col-12"/>
+        <div class="col-12">
+            <h4 class="text-center">Bulk actions</h4>
+            <button
+                data-url="/Videos/DeleteBulk"
+                class="btn btn-danger bulk-action-button"
+                disabled
+            >
+                Delete All Selected
+            </button>
+            
+            <button
+                data-url="/Videos/ViewBulk"
+                data-url-redirect="true"
+                class="btn btn-info bulk-action-button"
+                disabled
+            >
+                View All Selected
+            </button>
+            
+            <button
+                data-url="/Videos/UpdateBulk"
+                data-url-redirect="true"
+                class="btn btn-warning bulk-action-button"
+                disabled
+            >
+                Update All Selected
+            </button>
+            
+            <button
+                data-url="/Videos/StatsBulk"
+                data-url-redirect="true"
+                class="btn btn-default bulk-action-button"
+                disabled
+            >
+                Stats of Selected (Summarized)
+            </button>
+            
+            <button
+                data-url="/Videos/StatsBulk"
+                data-url-query="summarized=false"
+                data-url-redirect="true"
+                class="btn btn-success bulk-action-button"
+                disabled
+            >
+                Stats of Selected
+            </button>
+        </div>
+        
+        <hr class="col-12"/>
+        
+        <div class="col-12">
+            <a 
+                class="btn btn-success btn-block col-8 offset-2"
+                asp-controller="Videos" asp-action="Create"
+            >
+                Create a new video.
+            </a>
+        </div>
+        <hr class="col-12"/>
+        <p class="col-12 text-black-50">
+            You can change url to get more videos like "/videos?limit=15" for more information please look to the controller
+        </p>
+        
+        <partial name="_SingleVieoView" model="@Model"/>
+    </div>
+</div>
