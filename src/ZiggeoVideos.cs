@@ -27,8 +27,8 @@ public class ZiggeoVideos {
         return this.application.connect().postJSONArray("/v1/videos/get_bulk", data, null);
     }
 
-    public JArray stats_bulk(Dictionary<string,string> data) {
-        return this.application.connect().postJSONArray("/v1/videos/stats_bulk", data, null);
+    public JObject stats_bulk(Dictionary<string,string> data) {
+        return this.application.connect().postJSON("/v1/videos/stats_bulk", data, null);
     }
 
     public Stream download_video(string token_or_key) {
@@ -68,17 +68,17 @@ public class ZiggeoVideos {
     }
 
     public JObject create(Dictionary<string,string> data, string file) {
-    if (file != null) {
-        var result = this.application.connect().postUploadJSON("/v1/videos-upload-url", "video", data, file, "video_type");
-        result["default_stream"] = this.application.connect().postJSON("/v1/videos/" + result["token"] + "/streams/" + result["default_stream"]["token"] + "/confirm-video");
-        return result;
-    } else
-            return this.application.connect().postJSON("/v1/videos/", data, file);
+        if (file != null) {
+            var result = this.application.connect().postUploadJSON("/v1/videos-upload-url", "video", data, file, "video_type");
+            result["default_stream"] = this.application.connect().postJSON("/v1/videos/" + result["token"] + "/streams/" + result["default_stream"]["token"] + "/confirm-video");
+            return result;
+        } else {
+            return this.application.connect().postJSON("/v1/videos/", data, null);
+		}
     }
 
     public JArray analytics(string token_or_key, Dictionary<string,string> data) {
         return this.application.connect().postJSONArray("/v1/videos/" + token_or_key + "/analytics", data, null);
     }
-
 }
 
