@@ -1,0 +1,115 @@
+@model ProfileViewModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Add Effect Profile";
+}
+
+<script>    
+    const onClickHandler = (ev, url) => {
+        ev.preventDefault();
+        $.ajax(url, {
+            beforeSend: () => {
+                showLoader();
+            },
+             
+            success: (res) => {
+                const {success, message} = res;
+                success ? showMessage(message) : showMessage("We have response: " + JSON.stringify(res), "danger");
+                hideLoader();
+                location.reload();                
+            },
+            
+            error: (error) => {
+                const {readyState, responseText} = error;
+                if (readyState === 4) {
+                    showMessage(responseText, "danger"); 
+                } else {
+                    showMessage("We have an error" + JSON.stringify(error), "danger"); 
+                }
+                hideLoader();
+            },
+        });
+    };
+    
+    window.addEventListener("load", (ev) => { 
+        addEffectProfileForm = $("#apply-effect-form");
+        submitButton = jQuery("#submit-button");
+        submitButton.prop("disabled", false);
+        profileSelectSelector = $("#profile-select");
+        videoSelectSelector = $("#video-select");
+    
+        const actionsButtonsSelector = $(".btn-action");
+        $.each(actionsButtonsSelector, (index, element) => {
+            const url = $(element).attr("data-url");
+            element.onclick = (ev) => onClickHandler(ev, url);
+        });
+    });
+
+    
+</script>
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            All listed profiles
+        </h1>
+        
+        <h5 class="page-item col-12">
+            More about profiles in 
+            <a target="_blank" href="https://ziggeo.com/docs/dashboard/profiles">
+                Ziggeo Documentation
+            </a>
+        </h5>
+        
+        <div class="col-12 col-md-offset-2 col-md-8">
+            @if (@Model.allProfiles.Count > 0)
+            {
+                <ul class="list-group">
+                    @foreach (var p in @Model.allProfiles)
+                    {
+                        <li class="list-group-item">
+                            <div>
+                                @p.title
+                                <div class="float-right">
+                                    <a
+                                        class="btn btn-xs btn-info"
+                                        href="/Profile/ViewDetails?token=@p.token">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    &nbsp;
+                                    <a
+                                        class="btn btn-xs btn-warning"
+                                        href="/Profile/Update?token=@p.token">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    &nbsp;
+                                    <button
+                                        class="btn-action btn btn-xs btn-danger"
+                                        data-url="/Profile/Delete?token=@p.token">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p>Is Default ? : @p.default_effect </p>
+                        </li> 
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-danger">
+                    You don't have any video profiles. Please read more information how you can.
+                </p>
+            }
+            
+            <br/>
+            
+            <a 
+                class="btn btn-success btn-block col-8 offset-2"
+                asp-controller="Profile" asp-action="Create"
+           >
+                Create a new profile.
+            </a>.
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+namespace ZiggeoDemoApp  {
+    public static class Config
+    {
+        // Here is just for example 2 ways os setting readonly variables
+        // readonly variable
+        public static string ApiKey
+        {
+            get { return "YOR_ZIGGEO_API_KEY"; }
+        }
+        // default
+        public static readonly string PrivateKey = "YOR_ZIGGEO_PRIVATE_KEY";
+        public static readonly string EncryptionKey = "YOR_ZIGGEO_ENCRY_KEY";
+        
+        // Another Application
+        // public static readonly string OtherAppApiKey = "SECOND_ZIGGEO_APP_API_KEY";
+        // public static readonly string PrivateKey = "SECOND_ZIGGEO_PRIVATE_KEY";
+        // public static readonly string EncryptionKey = "SECOND_ZIGGEO_ENCRY_KEY";
+        // public static readonly string AuthToken = "AUTH_TOKEN";
+    }
+}

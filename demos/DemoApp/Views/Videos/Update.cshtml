@@ -1,0 +1,41 @@
+@model ProfileUpdateModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Update Effect Profile";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            @ViewData["Title"]
+        </h1>
+        <div class="col-12">
+            <a href="/Profile" class="btn btn-primary active" role="button" aria-pressed="true">
+                All Available Profiles
+            </a>
+            
+            <a target="_blank" 
+               href="https://ziggeo.com/docs/dashboard/profiles"
+               class="btn btn-secondary active"
+               role="button" aria-pressed="true"
+            >
+                Ziggeo Documentation
+            </a>
+            
+            <a href="/Profile/Delete?token=@Model.profileToken"
+               class="btn btn-danger active"
+               role="button" aria-pressed="true"
+           >
+                Delete
+            </a>
+        </div>
+        
+        <div class="col-12">
+            <hr/>
+        </div>
+        
+        <div class="col-12">
+            <partial name="_Form" model="@Model"/>
+        </div>
+    </div>
+</div>

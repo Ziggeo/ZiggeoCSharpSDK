@@ -1,0 +1,28 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=299b2c08_002D9d23_002D4933_002D9b87_002D334d775bc3a8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="getAnalyticsData" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.AnalyticsTest.getAnalyticsData&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.ApplicationTest.get&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.ApplicationTest.updateApplication&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.ApplicationTest.getStats&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8cdb2f70_002D8338_002D4b6b_002Dacac_002Dab93bac0bad1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="getAnalyticsData #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.AnalyticsTest.getAnalyticsData&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=96497228_002D4b9c_002D4f19_002D929a_002Dcdc57b24c4f0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="getAnalyticsData #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.AnalyticsTest.getAnalyticsData&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b7b693b1_002Dab48_002D495c_002Da380_002D76dc70f5f526/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="getStats" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.ApplicationTest.getStats&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.AuthTest.get&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.AnalyticsTest.getAnalyticsData&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.MetaProfilesTest.index&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::1621C9C2-B824-AB5B-3A37-530FCB1A283A::.NETCoreApp,Version=v3.1::ZiggeoDemoApp.Tests.MetaProfilesTest.crudOperation&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

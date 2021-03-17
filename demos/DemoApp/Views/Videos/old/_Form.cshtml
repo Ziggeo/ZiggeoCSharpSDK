@@ -1,0 +1,275 @@
+<script>
+    let URL = "/Videos/Create", videosForm, submitButton;
+    let state = {
+        isCreating: true,
+        key: "",
+        tags: "",
+        fileSelected: false,
+        file: "",
+        minDuration: null,
+        maxDuration: null,
+        volatileVideo: false,
+        videoToken: false,
+        expirationDays: null,
+        expireOn: null
+    };
+    
+    if ("@Model.isCreate.ToString()".toUpperCase() !== "TRUE") {
+        state = {...state,  isCreating: false};
+        URL = "/Videos/Update";
+    }
+        
+    /**
+    * Verify on each step
+    */
+    const verify = () => {
+        hideMessage();
+        console.log('State', state);
+        const {fileSelected, isCreating} = state;
+        if (fileSelected && isCreating) {
+            submitButton.prop("disabled", false);
+            return true;
+        } else {
+            showMessage("Please fill all required fields", "danger");
+            submitButton.prop("disabled", true);
+            return false;
+        }
+    }
+    
+    const onInputChangeHandler = (ev) => {
+        ev.preventDefault();
+        const { name, value } = ev.target;
+        state[name] = value;
+        
+        if (name === 'file') { 
+            state = {...state, fileSelected: value.length > 0};
+        }
+        verify();
+    }
+    
+    const checkBoxHandler = (ev) => {
+        const { name, checked } = ev.target;
+        state[name] = checked;
+        verify();
+    }   
+    
+    const sendVideosFormData = (ev) => { 
+        ev.preventDefault();
+        hideMessage();
+        hideLoader();
+        // const formData = new FormData($("#videos-form")[0]);
+        if (verify()) {
+            let postData;
+            const { isCreating, file, maxDuration, minDuration, tags, key, volatileVideo } = state;
+            if (isCreating) {
+                postData = { file, minDuration, maxDuration, tags, key, volatileVideo };
+            } else {
+                postData = { minDuration, maxDuration, tags, key, volatileVideo };
+            }
+            console.log('-- ', JSON.stringify(postData));
+            $.ajax({
+                url: URL,
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(postData),
+                dataType: "json",
+                beforeSend: () => {
+                    showLoader();
+                    console.log('Request Started');
+                }, 
+                success: (res) => {
+                    const {success, message} = res;
+                    console.log("success Response: ",  message);
+                    Boolean(success) ? showMessage(message) : showMessage("We have response: " + JSON.stringify(res) + "; Message :" + message, "danger");
+                    hideLoader();
+                },
+                error: (error) => {
+                    const {readyState, responseText} = error;
+                    if (readyState === 4) {
+                        showMessage(responseText, "danger"); 
+                    } else {
+                        showMessage("We have an error" + JSON.stringify(error), "danger"); 
+                    }
+                    hideLoader();
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {                  
+                    let message = "HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText; 
+                    showMessage(message, "danger");
+                    hideLoader();
+                }
+            }); 
+        }
+    }
+         
+    window.addEventListener("load", (ev) => { 
+        submitButton = jQuery("#submit-button");
+        submitButton[0].onclick = sendVideosFormData;
+    
+        const inputElementsSelector = $(".text-input");
+        if (inputElementsSelector)  {
+            $.each(inputElementsSelector, (index, element) => {
+                element.onkeyup = (ev) => onInputChangeHandler(ev);
+            });
+        }
+        
+        const fileElementsSelector = $(".file-input");
+        if (fileElementsSelector)  {
+            $.each(fileElementsSelector, (index, element) => {
+                element.onchange = (ev) => onInputChangeHandler(ev);
+            });
+        }
+        
+        const hiddenInputs = $(".hidden-inputs");
+        if (hiddenInputs) { 
+            $.each(hiddenInputs, (index, element) => {
+                const name = $(element).attr("name");
+                const value = $(element).val();
+                if (name && value && typeof state[name] !== 'undefined') {
+                    state[name] = value;
+                }
+            });
+        }        
+    });
+</script>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form id="videos-form" class="form" onsubmit="return false;" >
+    
+    <div class="form-group row">
+        <label for="video-key" class="col-sm-3 col-form-label">Video Key</label>
+        <div class="col-sm-9">
+            <input
+                id="video-key" name="key"
+                placeholder="Video Unique Key per Application (Optional)"
+                value="@Model.key"
+                class="text-input form-control"
+            />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="video-tags" class="col-sm-3 col-form-label">Video tags</label>
+        <div class="col-sm-9">
+            <input
+                id="video-tags" name="tags"
+                value="@Model.tags"
+                class="text-input form-control" placeholder="Video attached tags"
+            />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group row">
+                <label for="video-minDuration" class="col-sm-3 col-form-label">Minimal duration of video</label>
+                <div class="col-sm-9">
+                    <input
+                        id="video-minDuration" name="minDuration"
+                        type="number"
+                        value="@Model.minDuration"
+                        class="text-input form-control" placeholder="Video allowed min duration"
+                    />
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-6">
+            <div class="form-group row">
+                <label for="video-maxDuration" class="col-sm-3 col-form-label">Maximum duration of video</label>
+                <div class="col-sm-9">
+                    <input
+                        id="video-maxDuration" name="maxDuration"
+                        type="number"
+                        value="@Model.maxDuration"
+                        class="text-input form-control" placeholder="Video allowed max duration"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @if (!@Model.isCreate)
+    {
+        <input type="hidden" class="hidden-inputs" name="profileToken" value="@Model.videoToken" />
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="video-expirationDays" class="col-sm-3 col-form-label">
+                        After how many days will this video be deleted
+                    </label>
+                    <div class="col-sm-9">
+                        <input
+                            id="video-expirationDays" name="expirationDays"
+                            type="number"
+                            value="@Model.expirationDays"
+                            class="text-input form-control" placeholder="Video allowed min duration"
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="video-expireOn" class="col-sm-3 col-form-label">
+                        On which date will this video be deleted. String in ISO 8601 format: YYYY-MM-DD
+                    </label>
+                    <div class="col-sm-9">
+                        <input
+                            id="video-expireOn"
+                            name="expireOn"
+                            type="number"
+                            value="@Model.expireOn"
+                            class="text-input form-control" placeholder="Video allowed max duration"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div class="form-group">
+        <div class="form-check">
+            <input
+                id="is-volatile" type="checkbox"
+                class="checkbox-input form-check-input"
+                checked="@Model.volatileVideo"
+                name="volatileVideo"
+            />
+            <label for="is-volatile" class="form-check-label">Will be volatile ?</label>
+        </div>
+    </div>
+    
+    <div class="custom-file row">
+        <label for="video-file" class="col-sm-3 col-form-label">Video File</label>
+        <div class="col-sm-9">
+            <input
+                id="video-file"
+                name="file"
+                type="file"
+                class="form-control-file form-control file-input"
+            />
+        </div>
+    </div>
+    <hr class="col-12" />
+
+    <div>
+        @if (@Model.isCreate)
+        {
+            <button
+                id="submit-button"
+                class="btn btn-success"
+                disabled
+            > Create Video </button>
+        }
+        else
+        {
+            <button
+                id="submit-button" 
+                type="submit"
+                class="btn btn-success"
+                disabled
+            > Update Video </button>
+        }
+    </div>
+</form>

@@ -1,0 +1,28 @@
+@model VideosViewModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Add Effect Profile";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            Video Details
+        </h1>
+        
+        <div class="col-12 mb-5">
+            <partial name="_SubTitle" />
+        </div>
+        
+        <div class="col-12 mb-5">
+            <a class="btn btn-success btn-block col-8 offset-2"
+               asp-controller="Videos" asp-action="Create">
+                Create a new video
+           </a>
+        </div>
+        
+        <partial name="_SingleVieoView" model="@Model"/>
+        <br/>
+    </div>
+</div>

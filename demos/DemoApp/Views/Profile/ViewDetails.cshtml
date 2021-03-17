@@ -1,0 +1,34 @@
+@model ProfileViewModel;
+@{
+    // Layout = null; // If want not to use Layout
+    ViewData["Title"] = "Add Effect Profile";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header col-12">
+            All listed profiles
+        </h1>
+        
+        <h5 class="page-item col-12">
+            More about profiles in 
+            <a target="_blank" href="https://ziggeo.com/docs/dashboard/profiles">
+                Ziggeo Documentation
+            </a>
+        </h5>
+        
+        <div class="col-12 col-md-offset-3 col-md-6">
+            <pre>
+                @Model.profile
+            </pre>
+            
+            <br/>
+            
+            <a
+                class="btn btn-success btn-block col-8 offset-2"
+                asp-controller="Profile" asp-action="Create">
+                Create a new profile.
+            </a>.
+        </div>
+    </div>
+</div>

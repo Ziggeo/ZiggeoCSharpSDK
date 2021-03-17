@@ -1,0 +1,87 @@
+<div id="list-all-items" class="col-12">
+    @if (@Model.allVideos.Count > 0)
+    {
+        <ul class="list-group">
+            @foreach (var p in @Model.allVideos)
+            {
+                <li class="list-group-item">
+                    <div class="card mb-3" style="max-width: 940px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-1">
+                                <input 
+                                    type="checkbox"
+                                    class="form-check bulk-action-checker" value="@p.token"
+                                    name="tokens"
+                                />
+                            </div>
+                            <div class="col-md-4">
+                                <img src="//@p.embed_image_url" class="card-img" alt="@p.title"/>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    <h5 class="card-title">@p.token</h5>
+                                    <p class="card-text">Duration: @p.duration</p>
+                                    <div class="card-footer col-12">
+                                        <a
+                                            class="btn btn-xs btn-info"
+                                            style="margin-right: 5px"
+                                            href="/Videos/ViewSingle?token=@p.token"
+                                            title="View Single video"
+                                        >
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+
+                                        <a
+                                            class="btn btn-xs btn-warning"
+                                            style="margin-right: 5px"
+                                            href="/Videos/Update?token=@p.token"
+                                            title="Edit the video"
+                                        >
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        <button
+                                            class="btn-action btn btn-xs btn-danger"
+                                            data-url="/Videos/Delete?token=@p.token"
+                                            title="Delete the video"
+                                        >
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <a
+                                            class="btn btn-xs btn-primary"
+                                            href="/Videos/DownloadVideo?token=@p.token"
+                                            title="Download Video File"
+                                        >
+                                            <i class="fa fa-film"></i>
+                                        </a>
+                                        <a
+                                            class="btn btn-xs btn-default"
+                                            href="/Videos/DownloadImage?token=@p.token"
+                                            title="Download Poster/Image File"
+                                        >
+                                            <i class="fa fa-image"></i>
+                                        </a>
+                                        <a
+                                            class="btn btn-xs btn-success"
+                                            href="/Videos/GetStat?token=@p.token"
+                                            title="See Video Stats"
+                                        >
+                                            <i class="fa fa-chart-line"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li> 
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-danger">
+            You don't have any videos. Please read more information how you can add a new.
+        </p>
+    }
+    <br/>
+</div>
