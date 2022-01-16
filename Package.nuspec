@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>ZiggeoCSharpSDK</id>
-    <version>0.1.24</version>
+    <version>0.1.27</version>
     <authors>Ziggeo</authors>
     <owners>Ziggeo</owners>
     <iconUrl>https://ziggeo.com/assets/images/logo.png</iconUrl>

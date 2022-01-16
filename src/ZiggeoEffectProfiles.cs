@@ -9,15 +9,14 @@ public class ZiggeoEffectProfiles {
 
     public ZiggeoEffectProfiles(Ziggeo application) {
         this.application = application;
-    }    
+    }
 
     public JObject create(Dictionary<string,string> data) {
         return this.application.connect().postJSON("/v1/effects/", data, null);
     }
 
-    // public JObject index(Dictionary<string,string> data) {
     public JArray index(Dictionary<string,string> data) {
-        return this.application.connect().getJSONArray("/v1/effects", data);
+        return this.application.connect().getJSONArray("/v1/effects/", data);
     }
 
     public JObject get(string token_or_key) {
