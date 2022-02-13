@@ -12,6 +12,8 @@ public class Ziggeo {
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
+    private ZiggeoAudios audiosObj = null;
+    private ZiggeoAudio_streams audio_streamsObj = null;
     private ZiggeoAuthtokens authtokensObj = null;
     private ZiggeoApplication applicationObj = null;
     private ZiggeoEffectProfiles effectProfilesObj = null;
@@ -101,6 +103,16 @@ public class Ziggeo {
         if (this.streamsObj == null)
             this.streamsObj = new ZiggeoStreams(this);
         return this.streamsObj;
+    }
+    public ZiggeoAudios audios() {
+        if (this.audiosObj == null)
+            this.audiosObj = new ZiggeoAudios(this);
+        return this.audiosObj;
+    }
+    public ZiggeoAudio_streams audio_streams() {
+        if (this.audio_streamsObj == null)
+            this.audio_streamsObj = new ZiggeoAudio_streams(this);
+        return this.audio_streamsObj;
     }
     public ZiggeoAuthtokens authtokens() {
         if (this.authtokensObj == null)
