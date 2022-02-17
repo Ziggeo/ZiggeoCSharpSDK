@@ -9,11 +9,12 @@ public class Ziggeo {
     private ZiggeoConnect connectObj;
     private ZiggeoConnect apiConnectObj;
     private ZiggeoConnect cdnConnectObj;
+    private ZiggeoConnect jsCdnConnectObj;
     private ZiggeoAuth authObj = null;
     private ZiggeoVideos videosObj = null;
     private ZiggeoStreams streamsObj = null;
     private ZiggeoAudios audiosObj = null;
-    private ZiggeoAudio_streams audio_streamsObj = null;
+    private ZiggeoAudioStreams audioStreamsObj = null;
     private ZiggeoAuthtokens authtokensObj = null;
     private ZiggeoApplication applicationObj = null;
     private ZiggeoEffectProfiles effectProfilesObj = null;
@@ -44,6 +45,11 @@ public class Ziggeo {
             if (this.token.StartsWith(key, comparison))
                 cdn_url = this.config().cdn_regions[key];
         this.cdnConnectObj = new ZiggeoConnect(this, cdn_url, this.configObj);
+				string js_cdn_url = this.config().js_cdn_url;
+				foreach (string key in this.config().js_cdn_regions.Keys)
+						if (this.token.StartsWith(key, comparison))
+								js_cdn_url = this.config().js_cdn_regions[key];
+				this.jsCdnConnectObj = new ZiggeoConnect(this, js_cdn_url, this.configObj);
     }
 
     public ZiggeoConfig config() {
@@ -89,6 +95,19 @@ public class Ziggeo {
         return this.cdnConnectObj;
     }
 
+		public ZiggeoConnect jsCdnConnect() {
+				if (this.jsCdnConnectObj == null)
+						{
+						StringComparison comparison = StringComparison.InvariantCulture;
+						string js_cdn_url = this.config().js_cdn_url;
+						foreach (string key in this.config().js_cdn_regions.Keys)
+								if (this.token.StartsWith(key, comparison))
+										js_cdn_url = this.config().js_cdn_regions[key];
+						this.jsCdnConnectObj = new ZiggeoConnect(this, js_cdn_url);
+				}
+				return this.jsCdnConnectObj;
+		}
+
     public ZiggeoAuth auth() {
         if (this.authObj == null)
             this.authObj = new ZiggeoAuth(this);
@@ -109,10 +128,10 @@ public class Ziggeo {
             this.audiosObj = new ZiggeoAudios(this);
         return this.audiosObj;
     }
-    public ZiggeoAudio_streams audio_streams() {
-        if (this.audio_streamsObj == null)
-            this.audio_streamsObj = new ZiggeoAudio_streams(this);
-        return this.audio_streamsObj;
+    public ZiggeoAudioStreams audioStreams() {
+        if (this.audioStreamsObj == null)
+            this.audioStreamsObj = new ZiggeoAudioStreams(this);
+        return this.audioStreamsObj;
     }
     public ZiggeoAuthtokens authtokens() {
         if (this.authtokensObj == null)

@@ -51,12 +51,12 @@ latest version: **0.1.29**
         7. [Audios Update Bulk](#method-audios-update-bulk)
         8. [Audios Delete](#method-audios-delete)
         9. [Audios Create](#method-audios-create)
-    6. [Methods for Audio_streams](#method-audio-streams)
-        1. [Audio_streams Index](#method-audio-streams-index)
-        2. [Audio_streams Get](#method-audio-streams-get)
-        3. [Audio_streams Download Audio](#method-audio-streams-download-audio)
-        4. [Audio_streams Delete](#method-audio-streams-delete)
-        5. [Audio_streams Create](#method-audio-streams-create)
+    6. [Methods for Audio Streams](#method-audio-streams)
+        1. [Audio Streams Index](#method-audio-streams-index)
+        2. [Audio Streams Get](#method-audio-streams-get)
+        3. [Audio Streams Download Audio](#method-audio-streams-download-audio)
+        4. [Audio Streams Delete](#method-audio-streams-delete)
+        5. [Audio Streams Create](#method-audio-streams-create)
     7. [Methods for Authtokens](#method-authtokens)
         1. [Authtokens Get](#method-authtokens-get)
         2. [Authtokens Update](#method-authtokens-update)
@@ -189,7 +189,7 @@ Currently available methods are branched off within different categories:
 1. Videos
 2. Streams
 3. Audios
-4. Audio_streams
+4. Audio Streams
 5. Authtokens
 6. Application
 7. Effect Profiles
@@ -620,7 +620,7 @@ ziggeo.audios().create(Dictionary<string, string> arguments, string file)
 - key: *Unique (optional) name of audio*
 - volatile: *Automatically removed this video if it remains empty*
 
-### Audio_streams<a name="method-audio-streams"></a>
+### Audio Streams<a name="method-audio-streams"></a>
 
 
 The streams resource allows you to directly access all streams associated with a single audio.
@@ -630,7 +630,7 @@ The streams resource allows you to directly access all streams associated with a
 Return all streams associated with a audio
 
 ```csharp
-ziggeo.audio_streams().index(string audio_token_or_key, Dictionary<string, string> arguments)
+ziggeo.audioStreams().index(string audio_token_or_key, Dictionary<string, string> arguments)
 ```
 
  Arguments
@@ -641,7 +641,7 @@ ziggeo.audio_streams().index(string audio_token_or_key, Dictionary<string, strin
 Get a single stream
 
 ```csharp
-ziggeo.audio_streams().get(string audio_token_or_key, string token_or_key)
+ziggeo.audioStreams().get(string audio_token_or_key, string token_or_key)
 ```
 
 #### Download Audio<a name="method-audio-streams-download-audio"></a>
@@ -649,7 +649,7 @@ ziggeo.audio_streams().get(string audio_token_or_key, string token_or_key)
 Download the audio data associated with the stream
 
 ```csharp
-ziggeo.audio_streams().download_audio(string audio_token_or_key, string token_or_key)
+ziggeo.audioStreams().download_audio(string audio_token_or_key, string token_or_key)
 ```
 
 #### Delete<a name="method-audio-streams-delete"></a>
@@ -657,7 +657,7 @@ ziggeo.audio_streams().download_audio(string audio_token_or_key, string token_or
 Delete the stream
 
 ```csharp
-ziggeo.audio_streams().delete(string audio_token_or_key, string token_or_key)
+ziggeo.audioStreams().delete(string audio_token_or_key, string token_or_key)
 ```
 
 #### Create<a name="method-audio-streams-create"></a>
@@ -665,7 +665,7 @@ ziggeo.audio_streams().delete(string audio_token_or_key, string token_or_key)
 Create a new stream
 
 ```csharp
-ziggeo.audio_streams().create(string audio_token_or_key, Dictionary<string, string> arguments, string file)
+ziggeo.audioStreams().create(string audio_token_or_key, Dictionary<string, string> arguments, string file)
 ```
 
  Arguments
