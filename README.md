@@ -1,6 +1,6 @@
 # Ziggeo's C# Server SDK
 
-latest version: **0.1.29**
+latest version: **0.1.30**
 
 ## Index
 
