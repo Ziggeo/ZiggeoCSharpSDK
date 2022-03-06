@@ -8,22 +8,25 @@ using Newtonsoft.Json;
 
 namespace Set_Key
 {
-    public class Set_Key
-    {
+	public class Set_Key
+	{
 		public static void Main(string[] args)
 		{
-			Ziggeo ziggeo = new Ziggeo("APP_TOKEN", "PRIVATE_KEY", "ENCRYPTION_KEY");
+			string app_token = args[0];
+			string private_key = args[1];
+			string video_token = args[2];
 
-			Dictionary<string, string> dict = new Dictionary<string, string>()
-				{
-					{"key","Unique_name"},
-				};
+			Ziggeo ziggeo = new Ziggeo(app_token, private_key, "");
+
+			Dictionary<string, string> arguments = new Dictionary<string, string>()
+			{
+				{"key","unique_name"},
+			};
 
 			/// key is the Unique (optional) name of the video
 
-			ziggeo.videos().update("Video_TOKEN", dict);
+			ziggeo.videos().update(video_token, arguments);
 			System.Console.WriteLine("Video has now been approved!!");
-
 		}
-    }
+	}
 }
