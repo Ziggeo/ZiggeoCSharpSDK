@@ -76,13 +76,12 @@ run_demo()
 # Videos
 run_demo ./demos/videos_count.cs.exe $app_token $private_key
 run_demo ./demos/videos_create.cs.exe $app_token $private_key $video_file
-run_demo ./demos/videos_download_image.cs.exe $app_token $private_key $video_token $video_file download.jpg
-run_demo ./demos/videos_download_video.cs.exe $app_token $private_key $video_token $video_file download.mp4
+run_demo ./demos/videos_download_image.cs.exe $app_token $private_key $video_token download.jpg
+run_demo ./demos/videos_download_video.cs.exe $app_token $private_key $video_token download.mp4
 run_demo ./demos/videos_get.cs.exe $app_token $private_key $video_token
 run_demo ./demos/videos_index.cs.exe $app_token $private_key
 run_demo ./demos/videos_push_to_service.cs.exe $app_token $private_key $video_token $push_token
 run_demo ./demos/videos_update.cs.exe $app_token $private_key $video_token $tags
-#run_demo ./demos/videos_delete.cs.exe $app_token $private_key $video_token
 
 
 # Streams
@@ -114,7 +113,7 @@ run_demo ./demos/effectprofiles_index.cs.exe $app_token $private_key
 
 
 # Permanent
-
+run_demo ./demos/videos_delete.cs.exe $app_token $private_key $video_token
 
 
 # Cleanup - Remove the libraries from demo directory
